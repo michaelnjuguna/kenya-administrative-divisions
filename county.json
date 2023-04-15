@@ -84,7 +84,7 @@
     "county_name": "Kilifi",
     "constituencies": [
       {
-        "Kilifi North": {
+    "constituency_name":    "Kilifi North" ,
           "wards": [
             "Tezo",
             "Sokoni",
@@ -95,7 +95,8 @@
             "Mnarani"
           ]
         },
-        "Kilifi South": {
+        {
+    "constituency_name":    "Kilifi South" ,
           "wards": [
             "Junju",
             "Mwarakaya",
@@ -103,14 +104,15 @@
             "Chasimba",
             "Mtepeni"
           ]
-        },
-        "Kaloleni": {
+        },{
+    "constituency_name":    "Kaloleni",
           "wards": ["Mariakani", "Kayafungo", "Kaloleni", "Mwanamwinga"]
-        },
-        "Ganze": {
+        },{
+    "constituency_name":    "Ganze",
           "wards": ["Dungicha", "Bamba", "Jaribuni", "Sokoke"]
         },
-        "Magarini": {
+        {
+    "constituency_name":    "Magarini",
           "wards": [
             "Maarafa",
             "Magarini",
@@ -121,13 +123,15 @@
           ]
         },
 
-        "Rabai": {
+        {
+    "constituency_name":    "Rabai",
           "wards": ["Mwawesa", "Ruruma", "Jibana", "Rabai/Kisurutuni"]
         },
-        "Malindi": {
+        {
+      "constituency_name":  "Malindi",
           "wards": ["Jilore", "Kakuyuni", "Ganda", "Malindi Town", "Shella"]
         }
-      }
+      
     ]
   },
   {
@@ -2920,7 +2924,7 @@
       },
       {
         "constituency_name": "Embakasi North",
-        "Wards": [
+        "wards": [
           "Dandora Area I",
           "Dandora Area II",
           "Dandora Area III",
@@ -2930,7 +2934,7 @@
       },
       {
         "constituency_name": "Embakasi Central",
-        "Wards": [
+        "wards": [
           "Kayole North",
           "Kayole Central",
           "Kariobangi South",
@@ -2940,7 +2944,7 @@
       },
       {
         "constituency_name": "Embakasi East",
-        "Wards": [
+        "wards": [
           "Utawala",
           "Upper Savanna",
           "Lower Savanna",
@@ -2950,15 +2954,15 @@
       },
       {
         "constituency_name": "Embakasi West",
-        "Wards": ["Umoja 1", "Umoja 2", "Mowlem ", "Kariobangi south","Maringo/ Hamza"]
+        "wards": ["Umoja 1", "Umoja 2", "Mowlem ", "Kariobangi south","Maringo/ Hamza"]
       },
       {
         "constituency_name": "Makadara",
-        "Wards": [ "Viwandani", "Harambee",  "Makongeni","Pumwani","Eastleigh North"]
+        "wards": [ "Viwandani", "Harambee",  "Makongeni","Pumwani","Eastleigh North"]
       },
       {
         "constituency_name": "Kamukunji",
-        "Wards": [
+        "wards": [
           "Eastleigh South",
           "Nairobi Central",
           "Airbase",
@@ -2968,7 +2972,7 @@
       },
       {
         "constituency_name": "Starehe",
-        "Wards": [
+        "wards": [
           "Nairobi South",
         "Hospital",
           "Ngara",
@@ -2979,7 +2983,7 @@
       },
       {
         "constituency_name": "Mathare",
-        "Wards": ["Mlango Kubwa", "Kiamaiko", "Ngei", "Huruma", "Mabatini"]
+        "wards": ["Mlango Kubwa", "Kiamaiko", "Ngei", "Huruma", "Mabatini"]
       }
     ]
   }
