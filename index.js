@@ -1,5 +1,4 @@
 const fs = require("fs");
-let countyData = [];
 // read county.json file
 function readCountyData() {
   return new Promise((resolve, reject) => {
@@ -13,15 +12,15 @@ function readCountyData() {
   });
 }
 
-readCountyData()
-  .then((data) => {
-    countyData = data;
-    // console.log(countyData);
-  })
-  .catch((error) => {
-    console.log(error);
-    return;
-  });
+// readCountyData()
+//   .then((data) => {
+//     countyData = data;
+//     // console.log(countyData);
+//   })
+//   .catch((error) => {
+//     console.log(error);
+//     return;
+//   });
 
 // getAll
 exports.getAll = () => {
@@ -81,12 +80,11 @@ exports.getCounty = (input) => {
             });
           }
         }
-      } else if (result.length === 0) {
-        result = "Invalid input";
-      } else {
-        result = "Invalid input";
       }
-      console.log(result);
+      if (result.length === 0) {
+        result = "Invalid county name or code";
+        console.log(result);
+      }
       return result;
     })
     .catch((error) => {
@@ -140,7 +138,7 @@ exports.getConstituencies = (input) => {
         }
       }
       if (result.length === 0) {
-        result = "Invalid input";
+        result = "Invalid constituency name";
       }
       console.log(result);
       return result;
@@ -151,3 +149,58 @@ exports.getConstituencies = (input) => {
     });
 };
 // getWards
+exports.getWards = (input) => {
+  readCountyData()
+    .then((data) => {
+      let result = [];
+      // when input is empty
+      if (
+        input === "" ||
+        input === null ||
+        input === undefined ||
+        input === 0 ||
+        input.length === 0
+      ) {
+        for (let i = 0; i < 47; i++) {
+          for (let j = 0; j < data[i].constituencies.length; j++) {
+            // console.log(data[i].constituencies[j].wards,data[i].county_name);
+            for (let k = 0; k < data[i].constituencies[j].wards.length; k++) {
+              result.push({
+                county_name: data[i].county_name,
+                county_code: data[i].county_code,
+                constituency_name: data[i].constituencies[j].constituency_name,
+                ward_name: data[i].constituencies[j].wards[k],
+              });
+            }
+          }
+        }
+      } else if (typeof input === "string") {
+        for (let i = 0; i < 47; i++) {
+          for (let j = 0; j < data[i].constituencies.length; j++) {
+            for (let k = 0; k < data[i].constituencies[j].wards.length; k++) {
+              if (
+                data[i].constituencies[j].wards[k].toLowerCase() ===
+                input.toLowerCase()
+              ) {
+                result.push({
+                  county_name: data[i].county_name,
+                  county_code: data[i].county_code,
+                  constituency_name:
+                    data[i].constituencies[j].constituency_name,
+                  ward_name: data[i].constituencies[j].wards[k],
+                });
+              }
+            }
+          }
+        }
+      }
+      if (result.length === 0) {
+        result = "invalid ward name";
+      }
+      console.log(result);
+    })
+    .catch((error) => {
+      console.log(error);
+      return;
+    });
+};
