@@ -1,8 +1,10 @@
 const fs = require("fs");
+const path = require('path');
 // read county.json file
+const countyDataFilePath = path.join(__dirname, 'county.json');
 function readCountyData() {
   return new Promise((resolve, reject) => {
-    fs.readFile("county.json", "utf-8", (error, data) => {
+    fs.readFile(countyDataFilePath, "utf-8", (error, data) => {
       if (error) {
         reject(error);
       } else {
@@ -11,41 +13,32 @@ function readCountyData() {
     });
   });
 }
-
-// readCountyData()
-//   .then((data) => {
-//     countyData = data;
-//     // console.log(countyData);
-//   })
-//   .catch((error) => {
-//     console.log(error);
-//     return;
-//   });
-
-// getAll
-exports.getAll = () => {
+// get all information(counties, constituencies, wards)
+function getAll(){
+  return new Promise((resolve, reject) => {
   readCountyData()
     .then((data) => {
-      console.log(data);
-      return data;
+      resolve(data);
     })
     .catch((error) => {
       console.log(error);
-      return;
+      reject(error);
     });
+  });
 };
 
-// getCounty
-exports.getCounty = (input) => {
+// get Counties 
+function getCounties(input){
+  return new Promise((resolve, reject) => {
   readCountyData()
     .then((data) => {
       // county code or name
       let result = [];
       // when input is empty
       if (
-        typeof input === "undefined" ||
+        input === "" || 
         input === null ||
-        input === "" ||
+        input === undefined ||
         input === 0 ||
         input.length === 0
       ) {
@@ -85,15 +78,19 @@ exports.getCounty = (input) => {
         result = "Invalid county name or code";
         console.log(result);
       }
-      return result;
+      // console.log(result);
+      resolve(result);
     })
     .catch((error) => {
       console.log(error);
-      return;
+      reject(error);
     });
-};
-// getConstituencies
-exports.getConstituencies = (input) => {
+  });
+  };
+
+// get Constituencies
+function getConstituencies(input){
+  return new Promise((resolve, reject) => {
   readCountyData()
     .then((data) => {
       let result = [];
@@ -111,6 +108,7 @@ exports.getConstituencies = (input) => {
               county_name: data[i].county_name,
               county_code: data[i].county_code,
               constituency_name: data[i].constituencies[j].constituency_name,
+              wards: data[i].constituencies[j].wards
             });
           }
         }
@@ -140,16 +138,18 @@ exports.getConstituencies = (input) => {
       if (result.length === 0) {
         result = "Invalid constituency name";
       }
-      console.log(result);
-      return result;
+      resolve(result);
     })
     .catch((error) => {
       console.log(error);
-      return;
+      reject(error);
+    
     });
+  });
 };
-// getWards
-exports.getWards = (input) => {
+// get Wards
+function getWards(input){
+  return new Promise((resolve, reject) => {
   readCountyData()
     .then((data) => {
       let result = [];
@@ -163,7 +163,6 @@ exports.getWards = (input) => {
       ) {
         for (let i = 0; i < 47; i++) {
           for (let j = 0; j < data[i].constituencies.length; j++) {
-            // console.log(data[i].constituencies[j].wards,data[i].county_name);
             for (let k = 0; k < data[i].constituencies[j].wards.length; k++) {
               result.push({
                 county_name: data[i].county_name,
@@ -197,10 +196,13 @@ exports.getWards = (input) => {
       if (result.length === 0) {
         result = "invalid ward name";
       }
-      console.log(result);
+    resolve(result);
     })
     .catch((error) => {
       console.log(error);
-      return;
+      reject(error);
     });
+  });
 };
+
+module.exports = {getAll, getCounties, getConstituencies, getWards}
