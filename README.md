@@ -1,10 +1,10 @@
 # kenya-administrative-divisions
 ** Effortlessly retrieve the names of Kenya's counties, constituencies, and wards **
 ## Table of Contents 
-+ [Get all](#getall)
-+ [Get counties](#getcounties)
-+ [Get constituencies](#getconstituencies)
-+ [Get wards](#getwards) 
++ [Get all](#get-all)
++ [Get counties](#get-counties)
++ [Get constituencies](#get-constituencies)
++ [Get wards](#get-wards) 
 
 ## Features
 + Get names,codes and constituencies of all counties in kenya
@@ -25,7 +25,7 @@ const kenyaAdministrativeDivisions = require('kenya-administrative-divisions');
 ```
 ** _EVERY FUNCTION RETURNS A PROMISE _ **
 
-## Get all {#getall}
+## #Get all 
 
 This will retrieve all counties,their names,their code and their constituences. The constituences will also include the ward names. Do not pass parameters to this function.
 
@@ -40,7 +40,7 @@ kenyaAdministrativeDivisions.getAll().then((data) => {
 
 ```
 
-## Get counties {#get counties}
+## #Get counties
 This will retrieve information about counties.
 ```javascript
 
@@ -70,7 +70,7 @@ kenyaAdministrativeDivisions.getCounties(47).then((data) => {
 ```
 
 
-## Get constituencies {#getconstituences}
+## #Get constituencies
 This will retrieve information about constituencies
 
 ```javascript
@@ -99,7 +99,7 @@ kenyaAdministrativeDivisions.getConstituencies(1).then((data) => {
 
 ```
 
-## Get wards {#getwards} 
+## #Get wards
 This will retrieve all information about wards
 
 ```javascript
