@@ -113,7 +113,7 @@ function getConstituencies(input){
           }
         }
         // when input is a string
-      } else if (typeof input === "string") {
+      } else if (typeof input === "string" && typeof +input !== "number") {
         for (let i = 0; i < 47; i++) {
           for (let j = 0; j < data[i].constituencies.length; j++) {
             if (
