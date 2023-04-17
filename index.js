@@ -129,12 +129,14 @@ function getConstituencies(input){
               break;
             }
           }
-          // when result is not empty
-          if (result.length > 0) {
-            break;
-          }
         }
+      } 
+      // get constituencies by county code
+      else if (typeof input === "number" && input > 0 && input < 48 || (typeof +input === "number" && !isNaN(+input) && +input > 0 && +input < 48)) {
+        result = data[input - 1].constituencies
+    
       }
+      // when input is invalid
       if (result.length === 0) {
         result = "Invalid constituency name";
       }
