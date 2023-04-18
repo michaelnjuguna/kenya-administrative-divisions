@@ -1,3 +1,5 @@
+[![npm version](https://badge.fury.io/js/kenya-administrative-divisions.svg)](https://github.com/michaelnjuguna/kenya-administrative-divisions) [![npm version](https://badgen.net/npm/dt/kenya-administrative-divisions)](https://github.com/michaelnjuguna/kenya-administrative-divisions) [![npm version](https://badgen.net/npm/license/lodash)](https://github.com/michaelnjuguna/kenya-administrative-divisions)
+
 # kenya-administrative-divisions
 ** Effortlessly retrieve the names of Kenya's counties, constituencies, and wards **
 ## Table of Contents 
