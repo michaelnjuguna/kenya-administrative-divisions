@@ -16,14 +16,30 @@
 ```
 npm install kenya-administrative-divisions
 
+OR
+
+yarn add kenya-administrative-divisions
+
 ```
 Once the package is installed you use the require approach
 
 ```javascript
 const kenyaAdministrativeDivisions = require('kenya-administrative-divisions');
 
+OR
+
+import kenyaAdministrativeDivisions from 'kenya-administrative-divisions'
+
 ```
-** _EVERY FUNCTION RETURNS A PROMISE _ **
+
+Or with TypeScript
+```typescript
+import * as kenyaAdministrativeDivisions from 'kenya-administrative-divisions'
+```
+create a `.d.ts` file and add
+```ts
+declare module 'kenya-administrative-divisions'
+```
 
 ## #Get all 
 
@@ -32,11 +48,7 @@ This will retrieve all counties,their names,their code and their constituences. 
 ```javascript
 const kenyaAdministrativeDivisions = require('kenya-administrative-divisions');
 
-kenyaAdministrativeDivisions.getAll().then((data) => {
-    console.log(data);
-    }).catch((error) => {
-    console.log(error);
-});  
+kenyaAdministrativeDivisions.getAll();
 
 ```
 
@@ -46,29 +58,33 @@ This will retrieve information about counties.
 
 const kenyaAdministrativeDivisions = require('kenya-administrative-divisions');
 // To get all counties and their county code
-kenyaAdministrativeDivisions.getCounties().then((data) => {
-    console.log(data);
-    }).catch((error) => {
-    console.log(error);
-});
+kenyaAdministrativeDivisions.getCounties();
 
 // To get the county the constituencies of a particular county pass the county name
-kenyaAdministrativeDivisions.getCounties("nairobi").then((data) => {
-    console.log(data);
-    }).catch((error) => {
-    console.log(error);
-});
+kenyaAdministrativeDivisions.getCounties("nairobi");
+kenyaAdministrativeDivisions.getCounties("kis");
 
 // To get the county the constituencies of a particular county pass the county code
 
-kenyaAdministrativeDivisions.getCounties(47).then((data) => {
-    console.log(data);
-    }).catch((error) => {
-    console.log(error);
-});
+kenyaAdministrativeDivisions.getCounties(47);
 
 ```
 
+## #Get county
+This will retrieve information about a particular county.
+```javascript
+
+const kenyaAdministrativeDivisions = require('kenya-administrative-divisions');
+
+// To get the county the constituencies of a particular county pass the county name
+kenyaAdministrativeDivisions.getCounties("nairobi");
+kenyaAdministrativeDivisions.getCounties("momb");
+
+// To get the county the constituencies of a particular county pass the county code
+
+kenyaAdministrativeDivisions.getCounties(47);
+
+```
 
 ## #Get constituencies
 This will retrieve information about constituencies
@@ -77,25 +93,13 @@ This will retrieve information about constituencies
 const kenyaAdministrativeDivisions = require('kenya-administrative-divisions');
 
 // To get all constituencies and their wards
-kenyaAdministrativeDivisions.getConstituencies().then((data) => {
-    console.log(data);
-    }).catch((error) => {
-    console.log(error);
-});  
+kenyaAdministrativeDivisions.getConstituencies(); 
 
 // To get information about a particular constituency pass a string to the function
-kenyaAdministrativeDivisions.getConstituencies("mwea").then((data) => {
-    console.log(data);
-    }).catch((error) => {
-    console.log(error);
-});  
+kenyaAdministrativeDivisions.getConstituencies("mwea");  
 
 // To get all constituencies of a particular county pass the county code as a parameter
-kenyaAdministrativeDivisions.getConstituencies(1).then((data) => {
-    console.log(data);
-    }).catch((error) => {
-    console.log(error);
-}); 
+kenyaAdministrativeDivisions.getConstituencies(1); 
 
 ```
 
@@ -105,17 +109,12 @@ This will retrieve all information about wards
 ```javascript
 const kenyaAdministrativeDivisions = require('kenya-administrative-divisions');
 // To get all the wards
-kenyaAdministrativeDivisions.getWards().then((data) => {
-    console.log(data);
-    }).catch((error) => {
-    console.log(error);
-});
-// To get a particular ward pass the name of the wards as a parameter
+kenyaAdministrativeDivisions.getWards();
 
-kenyaAdministrativeDivisions.getWards("bangale").then((data) => {
-    console.log(data);
-    }).catch((error) => {
-    console.log(error);
-});
+// To get a particular ward pass the name of the wards as a parameter
+kenyaAdministrativeDivisions.getWards("bangale");
+
+// To get wards in a county, by code
+kenyaAdministrativeDivisions.getWards(43);
 
 ```
