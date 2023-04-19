@@ -1,0 +1,11 @@
+*.iml
+.idea
+.tscache
+.DS_Store
+node_modules/
+coverage/
+sauce_connect.log
+backup/
+/.husky/
+.npmrc
+.env
