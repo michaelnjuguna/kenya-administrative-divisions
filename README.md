@@ -1,5 +1,5 @@
 # kenya-administrative-divisions
-** Effortlessly retrieve the names of Kenya's counties, constituencies, and wards **
+**Effortlessly retrieve the names of Kenya's counties, constituencies, and wards**
 ## Table of Contents 
 + [Get all](#get-all)
 + [Get counties](#get-counties)
