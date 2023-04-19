@@ -23,13 +23,28 @@ Once the package is installed you use the require approach
 const kenyaAdministrativeDivisions = require('kenya-administrative-divisions');
 
 ```
-** _EVERY FUNCTION RETURNS A PROMISE _ **
+Or you can use the import approach 
+
+```javascript
+import kenyaAdministrativeDivisions from 'kenya-administrative-divisions';
+
+// Declare all available functions 
+const getAll = kenyaAdministrativeDivisions.getAll;
+const getCounties = kenyaAdministrativeDivisions.getCounties;
+const getConstituencies = kenyaAdministrativeDivisions.getConstituencies;
+const getWards = kenyaAdministrativeDivisions.getWards;
+
+```
+
+**EVERY FUNCTION RETURNS A PROMISE**
 
 ## #Get all 
 
 This will retrieve all counties,their names,their code and their constituences. The constituences will also include the ward names. Do not pass parameters to this function.
 
 ```javascript
+
+// When using require approach
 const kenyaAdministrativeDivisions = require('kenya-administrative-divisions');
 
 kenyaAdministrativeDivisions.getAll().then((data) => {
@@ -38,7 +53,28 @@ kenyaAdministrativeDivisions.getAll().then((data) => {
     console.log(error);
 });  
 
+// when using import approach
+import kenyaAdministrativeDivisions from 'kenya-administrative-divisions';
+
+// Declare all available functions 
+const getAll = kenyaAdministrativeDivisions.getAll;
+const getCounties = kenyaAdministrativeDivisions.getCounties;
+const getConstituencies = kenyaAdministrativeDivisions.getConstituencies;
+const getWards = kenyaAdministrativeDivisions.getWards;
+
+// get all function 
+getAll().then((data) => {
+    console.log(data);
+    }).catch((error) => {
+    console.log(error);
+});  
+
+
+
 ```
+**All examples shown below use the require approach if you are using the import approach just remove  *kenyaAdministrationDivisons* before the function call**
+
+
 
 ## #Get counties
 This will retrieve information about counties.
