@@ -20,19 +20,14 @@ npm install kenya-administrative-divisions
 Once the package is installed you use the require approach
 
 ```javascript
-const kenyaAdministrativeDivisions = require('kenya-administrative-divisions');
+const kenyaAdministrativeDivisions = require("kenya-administrative-divisions");
 
 ```
 Or you can use the import approach 
 
 ```javascript
-import kenyaAdministrativeDivisions from 'kenya-administrative-divisions';
+import {getAll,getConstituencies,getWards,getCounties} from "kenya-administrative-divisions";
 
-// Declare all available functions 
-const getAll = kenyaAdministrativeDivisions.getAll;
-const getCounties = kenyaAdministrativeDivisions.getCounties;
-const getConstituencies = kenyaAdministrativeDivisions.getConstituencies;
-const getWards = kenyaAdministrativeDivisions.getWards;
 
 ```
 
@@ -45,7 +40,7 @@ This will retrieve all counties,their names,their code and their constituences. 
 ```javascript
 
 // When using require approach
-const kenyaAdministrativeDivisions = require('kenya-administrative-divisions');
+const kenyaAdministrativeDivisions = require("kenya-administrative-divisions");
 
 kenyaAdministrativeDivisions.getAll().then((data) => {
     console.log(data);
@@ -54,13 +49,7 @@ kenyaAdministrativeDivisions.getAll().then((data) => {
 });  
 
 // when using import approach
-import kenyaAdministrativeDivisions from 'kenya-administrative-divisions';
-
-// Declare all available functions 
-const getAll = kenyaAdministrativeDivisions.getAll;
-const getCounties = kenyaAdministrativeDivisions.getCounties;
-const getConstituencies = kenyaAdministrativeDivisions.getConstituencies;
-const getWards = kenyaAdministrativeDivisions.getWards;
+import {getAll,getConstituencies,getWards,getCounties} from "kenya-administrative-divisions";
 
 // get all function 
 getAll().then((data) => {
@@ -80,7 +69,7 @@ getAll().then((data) => {
 This will retrieve information about counties.
 ```javascript
 
-const kenyaAdministrativeDivisions = require('kenya-administrative-divisions');
+const kenyaAdministrativeDivisions = require("kenya-administrative-divisions");
 // To get all counties and their county code
 kenyaAdministrativeDivisions.getCounties().then((data) => {
     console.log(data);
@@ -110,7 +99,7 @@ kenyaAdministrativeDivisions.getCounties(47).then((data) => {
 This will retrieve information about constituencies
 
 ```javascript
-const kenyaAdministrativeDivisions = require('kenya-administrative-divisions');
+const kenyaAdministrativeDivisions = require("kenya-administrative-divisions");
 
 // To get all constituencies and their wards
 kenyaAdministrativeDivisions.getConstituencies().then((data) => {
@@ -139,7 +128,7 @@ kenyaAdministrativeDivisions.getConstituencies(1).then((data) => {
 This will retrieve all information about wards
 
 ```javascript
-const kenyaAdministrativeDivisions = require('kenya-administrative-divisions');
+const kenyaAdministrativeDivisions = require("kenya-administrative-divisions");
 // To get all the wards
 kenyaAdministrativeDivisions.getWards().then((data) => {
     console.log(data);
