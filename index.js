@@ -1,11 +1,7 @@
 'use strict';
 // check if in a browser or node
-var fs;
-if (typeof window !== "undefined") {
-  fs = require("browserify-fs");
-}else {
-  fs = require("fs");
-}
+
+const fs = require("fs");
 const path = require('path');
 // read county.json file
 const countyDataFilePath = path.join(__dirname, 'county.json');

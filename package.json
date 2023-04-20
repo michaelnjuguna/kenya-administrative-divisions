@@ -23,8 +23,5 @@
   "bugs": {
     "url": "https://github.com/michaelnjuguna/kenya-administrative-divisions/issues"
   },
-  "homepage": "https://github.com/michaelnjuguna/kenya-administrative-divisions#readme",
-  "dependencies": {
-    "browserify-fs": "^1.0.0"
-  }
+  "homepage": "https://github.com/michaelnjuguna/kenya-administrative-divisions#readme"
 }
