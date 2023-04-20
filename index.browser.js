@@ -1,6 +1,4 @@
 "use strict";
-import path from "path-browserify";
-
 // THIS PIECE OF CODE WILL BE UPDATED AS SOON AS POSSIBLE BUT IT IS WORKING
 function readCountyData() {
   return new Promise((resolve, reject) => {
