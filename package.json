@@ -3,6 +3,7 @@
   "version": "0.0.6",
   "description": "Kenya-administrative-divisions is an npm package that provides information about counties, constituencies, and wards in Kenya. This package can be used by developers who are building web or mobile applications that require access to geographic data about Kenya.",
   "main": "index.js",
+  "browser": "index.browser.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -23,5 +24,8 @@
   "bugs": {
     "url": "https://github.com/michaelnjuguna/kenya-administrative-divisions/issues"
   },
-  "homepage": "https://github.com/michaelnjuguna/kenya-administrative-divisions#readme"
+  "homepage": "https://github.com/michaelnjuguna/kenya-administrative-divisions#readme",
+  "dependencies": {
+    "path-browserify": "^1.0.1"
+  }
 }

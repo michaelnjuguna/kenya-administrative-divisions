@@ -1,21 +1,24 @@
 "use strict";
- 
-const fs = require("fs");
-const path = require("path");
-
-// read county.json file
+import path from "path-browserify";
 const countyDataFilePath = path.join(__dirname, "county.json");
+
 function readCountyData() {
-  return new Promise((resolve, reject) => {
-    fs.readFile(countyDataFilePath, "utf-8", (error, data) => {
-      if (error) {
-        reject(error);
-      } else {
-        resolve(JSON.parse(data));
-      }
+  return fetch(countyDataFilePath)
+    .then(response => response.blob())
+    .then(blob => {
+      const reader = new FileReader();
+      reader.readAsText(blob);
+      return new Promise((resolve, reject) => {
+        reader.addEventListener("load", () => {
+          resolve(JSON.parse(reader.result));
+        });
+        reader.addEventListener("error", () => {
+          reject(reader.error);
+        });
+      });
     });
-  });
 }
+
 // get all information(counties, constituencies, wards)
 function getAll() {
   return new Promise((resolve, reject) => {
@@ -216,4 +219,4 @@ function getWards(input) {
   });
 }
 
-module.exports = { getAll, getCounties, getConstituencies, getWards };
+export { getAll, getCounties, getConstituencies, getWards };
