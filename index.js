@@ -1,19 +1,13 @@
 "use strict";
- 
-const fs = require("fs");
-const path = require("path");
-
+const countyData = require("./county.json");
 // read county.json file
-const countyDataFilePath = path.join(__dirname, "county.json");
 function readCountyData() {
   return new Promise((resolve, reject) => {
-    fs.readFile(countyDataFilePath, "utf-8", (error, data) => {
-      if (error) {
-        reject(error);
-      } else {
-        resolve(JSON.parse(data));
-      }
-    });
+    if (countyData) {
+      resolve(countyData);
+    } else {
+      reject("Error: Unable to read county data.");
+    }
   });
 }
 // get all information(counties, constituencies, wards)
@@ -29,7 +23,6 @@ function getAll() {
       });
   });
 }
-
 // get Counties
 function getCounties(input) {
   return new Promise((resolve, reject) => {
@@ -90,7 +83,6 @@ function getCounties(input) {
       });
   });
 }
-
 // get Constituencies
 function getConstituencies(input) {
   return new Promise((resolve, reject) => {
@@ -215,5 +207,4 @@ function getWards(input) {
       });
   });
 }
-
 module.exports = { getAll, getCounties, getConstituencies, getWards };
