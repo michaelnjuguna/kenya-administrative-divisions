@@ -1,6 +1,8 @@
 # kenya-administrative-divisions
 **Effortlessly retrieve the names of Kenya's counties, constituencies, and wards**
 ## Table of Contents 
++ [Install](#install)
++ [Usage](#Usage)
 + [Get all](#get-all)
 + [Get counties](#get-counties)
 + [Get constituencies](#get-constituencies)
@@ -11,12 +13,20 @@
 + Get names and wards of all constituences in kenya
 + Get names of all wards in kenya
 
-## Installing
+# Install
+Via npm
 
 ```sh
 npm install kenya-administrative-divisions
 
 ```
+or via yarn
+
+```sh
+yarn add kenya-administrative-divisions
+```
+# Usage
+
 Once the package is installed you use the require approach
 
 ```javascript
