@@ -168,4 +168,4 @@ If you like this project, You can support me with starring ⭐ this repository.
 
 ### License
 
-[MIT](LICENSE)
+[MIT](LICENSE.txt)
