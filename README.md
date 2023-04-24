@@ -13,7 +13,7 @@
 
 ## Installing
 
-```
+```sh
 npm install kenya-administrative-divisions
 
 ```
@@ -33,7 +33,7 @@ import {getAll,getConstituencies,getWards,getCounties} from "kenya-administrativ
 
 **EVERY FUNCTION RETURNS A PROMISE**
 
-## #Get all 
+## Get all 
 
 This will retrieve all counties,their names,their code and their constituences. The constituences will also include the ward names. Do not pass parameters to this function.
 
@@ -65,7 +65,7 @@ getAll().then((data) => {
 
 
 
-## #Get counties
+## Get counties
 This will retrieve information about counties.
 ```javascript
 
@@ -95,7 +95,7 @@ kenyaAdministrativeDivisions.getCounties(47).then((data) => {
 ```
 
 
-## #Get constituencies
+## Get constituencies
 This will retrieve information about constituencies
 
 ```javascript
@@ -124,7 +124,7 @@ kenyaAdministrativeDivisions.getConstituencies(1).then((data) => {
 
 ```
 
-## #Get wards
+## Get wards
 This will retrieve all information about wards
 
 ```javascript
@@ -144,3 +144,18 @@ kenyaAdministrativeDivisions.getWards("bangale").then((data) => {
 });
 
 ```
+### Contributing
+1. Fork this repository.
+2. Create new branch with feature name.
+3. Create your feature.
+4. Commit and set commit message with feature name.
+5. Push your code to your fork repository.
+6. Create pull request. 
+
+### Support
+
+If you like this project, You can support me with starring ⭐ this repository.
+
+### License
+
+[MIT](LICENSE)
