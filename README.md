@@ -1,31 +1,38 @@
 # kenya-administrative-divisions
-**Effortlessly retrieve the names of Kenya's counties, constituencies, and wards**
-## Table of Contents 
+
+## Effortlessly retrieve the names of Kenya's counties, constituencies, and wards
+
+## Table of Contents
+
 + [Install](#install)
-+ [Usage](#Usage)
++ [Usage](#usage)
 + [Get all](#get-all)
 + [Get counties](#get-counties)
 + [Get constituencies](#get-constituencies)
-+ [Get wards](#get-wards) 
++ [Get wards](#get-wards)
 
 ## Features
+
 + Get names,codes and constituencies of all counties in kenya
 + Get names and wards of all constituences in kenya
 + Get names of all wards in kenya
 
-# Install
+## Install
+
 Via npm
 
 ```sh
 npm install kenya-administrative-divisions
 
 ```
+
 or via yarn
 
 ```sh
 yarn add kenya-administrative-divisions
 ```
-# Usage
+
+## Usage
 
 Once the package is installed you use the require approach
 
@@ -33,7 +40,8 @@ Once the package is installed you use the require approach
 const kenyaAdministrativeDivisions = require("kenya-administrative-divisions");
 
 ```
-Or you can use the import approach 
+
+Or you can use the import approach
 
 ```javascript
 import {getAll,getConstituencies,getWards,getCounties} from "kenya-administrative-divisions";
@@ -41,9 +49,9 @@ import {getAll,getConstituencies,getWards,getCounties} from "kenya-administrativ
 
 ```
 
-**EVERY FUNCTION RETURNS A PROMISE**
+### EVERY FUNCTION RETURNS A PROMISE
 
-## Get all 
+## Get all
 
 This will retrieve all counties,their names,their code and their constituences. The constituences will also include the ward names. Do not pass parameters to this function.
 
@@ -71,12 +79,13 @@ getAll().then((data) => {
 
 
 ```
+
 **All examples shown below use the require approach if you are using the import approach just remove  *kenyaAdministrationDivisons* before the function call**
 
-
-
 ## Get counties
+
 This will retrieve information about counties.
+
 ```javascript
 
 const kenyaAdministrativeDivisions = require("kenya-administrative-divisions");
@@ -104,8 +113,8 @@ kenyaAdministrativeDivisions.getCounties(47).then((data) => {
 
 ```
 
-
 ## Get constituencies
+
 This will retrieve information about constituencies
 
 ```javascript
@@ -135,6 +144,7 @@ kenyaAdministrativeDivisions.getConstituencies(1).then((data) => {
 ```
 
 ## Get wards
+
 This will retrieve all information about wards
 
 ```javascript
@@ -154,13 +164,15 @@ kenyaAdministrativeDivisions.getWards("bangale").then((data) => {
 });
 
 ```
+
 ### Contributing
+
 1. Fork this repository.
 2. Create new branch with feature name.
 3. Create your feature.
 4. Commit and set commit message with feature name.
 5. Push your code to your fork repository.
-6. Create pull request. 
+6. Create pull request.
 
 ### Support
 
