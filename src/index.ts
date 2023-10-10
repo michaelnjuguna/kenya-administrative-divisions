@@ -1,5 +1,5 @@
 "use strict";
-const countyData = require("./county.json");
+const countyData = require("../county.json");
 // read county.json file
 function readCountyData() {
   return new Promise((resolve, reject) => {
@@ -18,7 +18,7 @@ function getAll() {
         resolve(data);
       })
       .catch((error) => {
-        console.log(error);
+        // console.log(error);
         reject(error);
       });
   });
@@ -71,14 +71,14 @@ function getCounties(input) {
           }
         }
         if (result.length === 0) {
-          result = "Invalid county name or code";
-          console.log(result);
+          result.push("Invalid county name or code");
+          // console.log(result);
         }
         // console.log(result);
         resolve(result);
       })
       .catch((error) => {
-        console.log(error);
+        // console.log(error);
         reject(error);
       });
   });
@@ -139,12 +139,12 @@ function getConstituencies(input) {
         }
         // when input is invalid
         if (result.length === 0) {
-          result = "Invalid constituency name";
+          result.push("Invalid constituency name");
         }
         resolve(result);
       })
       .catch((error) => {
-        console.log(error);
+        // console.log(error);
         reject(error);
       });
   });
@@ -197,14 +197,14 @@ function getWards(input) {
           }
         }
         if (result.length === 0) {
-          result = "invalid ward name";
+          result.push("invalid ward name");
         }
         resolve(result);
       })
       .catch((error) => {
-        console.log(error);
+        // console.log(error);
         reject(error);
       });
   });
 }
-module.exports = { getAll, getCounties, getConstituencies, getWards };
+module.exports= { getAll:getAll, getCounties:getCounties, getConstituencies:getConstituencies, getWards:getWards };

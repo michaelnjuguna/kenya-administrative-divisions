@@ -16,6 +16,7 @@
 + Get names,codes and constituencies of all counties in kenya
 + Get names and wards of all constituences in kenya
 + Get names of all wards in kenya
++ Supports Typescript
 
 ## Install
 
@@ -181,3 +182,5 @@ If you like this project, You can support me with starring ⭐ this repository.
 ### License
 
 [MIT](LICENSE.txt)
+
+Made with 💙
