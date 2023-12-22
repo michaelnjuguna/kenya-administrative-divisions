@@ -36,7 +36,7 @@ function getAll(): Promise<CountyInfo[]> {
   return readCountyData();
 }
 // get Counties
-function getCounties(input: number | string): Promise<CountyInfo[]> {
+function getCounties(input?: number | string): Promise<CountyInfo[]> {
   return new Promise((resolve, reject) => {
     readCountyData()
       .then((data) => {
@@ -79,7 +79,7 @@ function getCounties(input: number | string): Promise<CountyInfo[]> {
 }
 // get Constituencies
 function getConstituencies(
-  input: number | string
+  input?: number | string
 ): Promise<ConstituencyInfo[] | string> {
   return new Promise((resolve, reject) => {
     readCountyData()
@@ -133,7 +133,7 @@ function getConstituencies(
   });
 }
 // get Wards
-function getWards(input: number | string): Promise<WardInfo[] | string> {
+function getWards(input?: number | string): Promise<WardInfo[] | string> {
   return new Promise((resolve, reject) => {
     readCountyData()
       .then((data) => {

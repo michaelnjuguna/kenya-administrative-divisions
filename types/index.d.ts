@@ -17,7 +17,7 @@ interface CountyInfo{
 }
 
 export declare function getAll(): Promise<CountyInfo[]>;
-export declare function getCounties(input: number | string): Promise<CountyInfo[]>;
-export declare function getConstituencies(input: number | string): Promise<ConstituencyInfo[]>;
-export declare function getWards(input: number | string): Promise<WardInfo[] | string>;
+export declare function getCounties(input?: number | string): Promise<CountyInfo[]>;
+export declare function getConstituencies(input?: number | string): Promise<ConstituencyInfo[]>;
+export declare function getWards(input?: number | string): Promise<WardInfo[] | string>;
 
