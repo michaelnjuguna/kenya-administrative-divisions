@@ -7,22 +7,13 @@ function readCountyData() {
             resolve(countyData);
         }
         else {
-            reject("Error: Unable to read county data.");
+            reject(new Error("Error: Unable to read county data."));
         }
     });
 }
 // get all information(counties, constituencies, wards)
 function getAll() {
-    return new Promise(function (resolve, reject) {
-        readCountyData()
-            .then(function (data) {
-            resolve(data);
-        })
-            .catch(function (error) {
-            // console.log(error);
-            reject(error);
-        });
-    });
+    return readCountyData();
 }
 // get Counties
 function getCounties(input) {
@@ -32,53 +23,39 @@ function getCounties(input) {
             // county code or name
             var result = [];
             // when input is empty
-            if (input === "" ||
-                input === null ||
-                input === undefined ||
-                input === 0 ||
-                input.length === 0) {
-                for (var i = 0; i < 47; i++) {
-                    result.push({
-                        county_code: data[i].county_code,
-                        county_name: data[i].county_name,
+            if (!input) {
+                result = data.map(function (_a) {
+                    var county_code = _a.county_code, county_name = _a.county_name;
+                    return ({
+                        county_code: county_code,
+                        county_name: county_name,
                     });
-                }
-                // when result is a number
+                });
+                // when input is a number
             }
-            else if ((input > 0 && input < 48 && typeof input === "number") ||
-                (typeof +input === "number" &&
-                    !isNaN(+input) &&
-                    +input > 0 &&
-                    +input < 48)) {
-                input = input - 1;
+            else if (typeof input === "number" && input > 0 && input < 48) {
+                var countyIndex = input - 1;
                 result.push({
-                    county_code: data[input].county_code,
-                    county_name: data[input].county_name,
-                    constituencies: data[input].constituencies,
+                    county_code: data[countyIndex].county_code,
+                    county_name: data[countyIndex].county_name,
+                    constituencies: data[countyIndex].constituencies,
                 });
                 // when result is a string
             }
             else if (typeof input === "string") {
-                for (var i = 0; i < 47; i++) {
-                    if (data[i].county_name.toLowerCase() === input.toLowerCase()) {
-                        result.push({
-                            county_code: data[i].county_code,
-                            county_name: data[i].county_name,
-                            constituencies: data[i].constituencies,
-                        });
-                    }
-                }
+                result = data.filter(function (county) { return county.county_name.toLowerCase() === input.toLowerCase(); });
             }
             if (result.length === 0) {
-                result.push("Invalid county name or code");
-                // console.log(result);
+                result.push({
+                    county_code: -1,
+                    county_name: "Invalid county name or code",
+                    constituencies: [],
+                });
             }
-            // console.log(result);
             resolve(result);
         })
             .catch(function (error) {
-            // console.log(error);
-            reject(error);
+            reject(error.message);
         });
     });
 }
@@ -89,56 +66,54 @@ function getConstituencies(input) {
             .then(function (data) {
             var result = [];
             // when input is empty
-            if (input === "" ||
-                input === null ||
-                input === undefined ||
-                input === 0 ||
-                input.length === 0) {
-                for (var i = 0; i < 47; i++) {
-                    for (var j = 0; j < data[i].constituencies.length; j++) {
+            if (!input) {
+                data.forEach(function (_a) {
+                    var county_name = _a.county_name, county_code = _a.county_code, constituencies = _a.constituencies;
+                    constituencies.forEach(function (_a) {
+                        var constituency_name = _a.constituency_name;
                         result.push({
-                            county_name: data[i].county_name,
-                            county_code: data[i].county_code,
-                            constituency_name: data[i].constituencies[j].constituency_name,
-                            wards: data[i].constituencies[j].wards,
+                            county_code: county_code,
+                            county_name: county_name,
+                            constituency_name: constituency_name,
                         });
-                    }
-                }
+                    });
+                });
                 // when input is a string
             }
-            else if (typeof input === "string" && typeof +input !== "number") {
-                for (var i = 0; i < 47; i++) {
-                    for (var j = 0; j < data[i].constituencies.length; j++) {
-                        if (data[i].constituencies[j].constituency_name.toLowerCase() ===
-                            input.toLowerCase()) {
+            else if (typeof input === "string") {
+                data.forEach(function (_a) {
+                    var constituencies = _a.constituencies, county_name = _a.county_name, county_code = _a.county_code;
+                    constituencies.forEach(function (_a) {
+                        var constituency_name = _a.constituency_name, wards = _a.wards;
+                        if (constituency_name.toLowerCase() === input.toLowerCase()) {
                             result.push({
-                                county_name: data[i].county_name,
-                                county_code: data[i].county_code,
-                                constituency_name: data[i].constituencies[j].constituency_name,
-                                wards: data[i].constituencies[j].wards,
+                                county_code: county_code,
+                                county_name: county_name,
+                                constituency_name: constituency_name,
+                                wards: wards,
                             });
-                            break;
                         }
-                    }
-                }
+                    });
+                });
             }
             // get constituencies by county code
-            else if ((typeof input === "number" && input > 0 && input < 48) ||
-                (typeof +input === "number" &&
-                    !isNaN(+input) &&
-                    +input > 0 &&
-                    +input < 48)) {
-                result = data[input - 1].constituencies;
+            else if (typeof input === "number" && input > 0 && input < 48) {
+                var countyIndex = input - 1;
+                result = data[countyIndex].constituencies;
             }
             // when input is invalid
             if (result.length === 0) {
-                result.push("Invalid constituency name");
+                result.push({
+                    county_name: "Invalid constituency name",
+                    county_code: -1,
+                    constituency_name: "",
+                    wards: [],
+                });
             }
             resolve(result);
         })
             .catch(function (error) {
-            // console.log(error);
-            reject(error);
+            reject(error.message);
         });
     });
 }
@@ -149,51 +124,76 @@ function getWards(input) {
             .then(function (data) {
             var result = [];
             // when input is empty
-            if (input === "" ||
-                input === null ||
-                input === undefined ||
-                input === 0 ||
-                input.length === 0) {
-                for (var i = 0; i < 47; i++) {
-                    for (var j = 0; j < data[i].constituencies.length; j++) {
-                        for (var k = 0; k < data[i].constituencies[j].wards.length; k++) {
+            if (!input) {
+                data.forEach(function (_a) {
+                    var constituencies = _a.constituencies, county_name = _a.county_name, county_code = _a.county_code;
+                    constituencies.forEach(function (_a) {
+                        var constituency_name = _a.constituency_name, wards = _a.wards;
+                        wards.forEach(function (ward_name) {
                             result.push({
-                                county_name: data[i].county_name,
-                                county_code: data[i].county_code,
-                                constituency_name: data[i].constituencies[j].constituency_name,
-                                ward_name: data[i].constituencies[j].wards[k],
+                                county_code: county_code,
+                                county_name: county_name,
+                                constituency_name: constituency_name,
+                                ward_name: ward_name,
                             });
-                        }
-                    }
-                }
+                        });
+                    });
+                });
+                // when input is a string
             }
             else if (typeof input === "string") {
-                for (var i = 0; i < 47; i++) {
-                    for (var j = 0; j < data[i].constituencies.length; j++) {
-                        for (var k = 0; k < data[i].constituencies[j].wards.length; k++) {
-                            if (data[i].constituencies[j].wards[k].toLowerCase() ===
-                                input.toLowerCase()) {
+                data.forEach(function (_a) {
+                    var constituencies = _a.constituencies, county_name = _a.county_name, county_code = _a.county_code;
+                    constituencies.forEach(function (_a) {
+                        var constituency_name = _a.constituency_name, wards = _a.wards;
+                        wards.forEach(function (ward_name) {
+                            if (ward_name.toLowerCase() === input.toLowerCase()) {
                                 result.push({
-                                    county_name: data[i].county_name,
-                                    county_code: data[i].county_code,
-                                    constituency_name: data[i].constituencies[j].constituency_name,
-                                    ward_name: data[i].constituencies[j].wards[k],
+                                    county_code: county_code,
+                                    county_name: county_name,
+                                    constituency_name: constituency_name,
+                                    ward_name: ward_name,
                                 });
                             }
-                        }
-                    }
-                }
+                        });
+                    });
+                });
+            }
+            // get wards by county code
+            else if (typeof input === "number" && input > 0 && input < 48) {
+                var countyIndex_1 = input - 1;
+                data[countyIndex_1].constituencies.forEach(function (_a) {
+                    var constituency_name = _a.constituency_name, wards = _a.wards;
+                    wards.forEach(function (ward_name) {
+                        result.push({
+                            county_code: data[countyIndex_1].county_code,
+                            county_name: data[countyIndex_1].county_name,
+                            constituency_name: constituency_name,
+                            ward_name: ward_name,
+                        });
+                    });
+                });
             }
             if (result.length === 0) {
-                result.push("invalid ward name");
+                result.push({
+                    county_name: "Invalid ward name",
+                    county_code: -1,
+                    constituency_name: "",
+                    ward_name: "",
+                });
             }
             resolve(result);
         })
             .catch(function (error) {
             // console.log(error);
-            reject(error);
+            reject(error.message);
         });
     });
 }
-module.exports = { getAll: getAll, getCounties: getCounties, getConstituencies: getConstituencies, getWards: getWards };
+module.exports = {
+    getAll: getAll,
+    getCounties: getCounties,
+    getConstituencies: getConstituencies,
+    getWards: getWards,
+};
 //# sourceMappingURL=index.js.map
