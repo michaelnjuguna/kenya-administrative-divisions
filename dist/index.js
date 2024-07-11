@@ -13,23 +13,6 @@ var __spreadArray =
   };
 exports.__esModule = true;
 exports.KenyaAdministrativeDivisions = void 0;
-// interface WardInfo {
-//   county_name: string;
-//   county_code: number;
-//   constituency_name: string;
-//   ward_name: string;
-// }
-// interface ConstituencyInfo {
-//   county_name: string;
-//   county_code: number;
-//   constituency_name?: string;
-//   wards?: string[];
-// }
-// interface CountyInfo {
-//   county_code: number;
-//   county_name: string;
-//   constituencies?: ConstituencyInfo[];
-// }
 var KenyaAdministrativeDivisions = /** @class */ (function () {
   function KenyaAdministrativeDivisions() {
     // Read the county data
@@ -63,13 +46,15 @@ var KenyaAdministrativeDivisions = /** @class */ (function () {
   };
   KenyaAdministrativeDivisions.prototype.getConstituencies = function (input) {
     var constituencies;
-    if (input === null) {
+    if (!!input === false) {
+      constituencies = [];
       this.countyData.forEach(function (county) {
         county.constituencies.forEach(function (constituency) {
           constituencies.push(constituency.constituency_name);
         });
       });
     } else if (typeof input === "number" && input > 0 && input < 48) {
+      constituencies = [];
       this.countyData[input - 1].constituencies.forEach(function (
         constituency
       ) {
@@ -77,7 +62,7 @@ var KenyaAdministrativeDivisions = /** @class */ (function () {
       });
     } else if (typeof input === "string") {
       for (var i = 0; i < this.countyData.length; i++) {
-        for (var j = 0; j < this.countyData[i].constituencies; j++) {
+        for (var j = 0; j < this.countyData[i].constituencies.length; j++) {
           if (
             this.countyData[i].constituencies[
               j
@@ -183,10 +168,6 @@ var KenyaAdministrativeDivisions = /** @class */ (function () {
             }
           }
         }
-        // this.countyData[county - 1].constituencies.filter((x) => {
-        //   x.constituency_name.toLowerCase() === constituency.toLowerCase();
-        //   return x.wards;
-        // });
       }
     }
     return !!wards
@@ -198,4 +179,4 @@ var KenyaAdministrativeDivisions = /** @class */ (function () {
 exports.KenyaAdministrativeDivisions = KenyaAdministrativeDivisions;
 //# sourceMappingURL=index.js.map
 let test = new KenyaAdministrativeDivisions();
-console.log(test.getCounties("homabay"));
+console.log(test.getConstituencies("mvita"));

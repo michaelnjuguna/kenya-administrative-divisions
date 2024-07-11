@@ -1,25 +1,4 @@
 "use strict";
-
-// interface WardInfo {
-//   county_name: string;
-//   county_code: number;
-//   constituency_name: string;
-//   ward_name: string;
-// }
-
-// interface ConstituencyInfo {
-//   county_name: string;
-//   county_code: number;
-//   constituency_name?: string;
-//   wards?: string[];
-// }
-
-// interface CountyInfo {
-//   county_code: number;
-//   county_name: string;
-//   constituencies?: ConstituencyInfo[];
-// }
-
 export class KenyaAdministrativeDivisions {
   // TODO: Break all forEach loops
   // TODO: Use map,filter,reduce
@@ -57,19 +36,21 @@ export class KenyaAdministrativeDivisions {
   }
   public getConstituencies(input?: number | string) {
     let constituencies: any;
-    if (input === null) {
+    if (!!input === false) {
+      constituencies = [];
       this.countyData.forEach((county) => {
         county.constituencies.forEach((constituency) => {
           constituencies.push(constituency.constituency_name);
         });
       });
     } else if (typeof input === "number" && input > 0 && input < 48) {
+      constituencies = [];
       this.countyData[input - 1].constituencies.forEach((constituency) => {
         constituencies.push(constituency.constituency_name);
       });
     } else if (typeof input === "string") {
       for (let i = 0; i < this.countyData.length; i++) {
-        for (let j = 0; j < this.countyData[i].constituencies; j++) {
+        for (let j = 0; j < this.countyData[i].constituencies.length; j++) {
           if (
             this.countyData[i].constituencies[
               j
@@ -81,6 +62,7 @@ export class KenyaAdministrativeDivisions {
         }
       }
     }
+
     return !!constituencies
       ? constituencies
       : "Error: Invalid parameter provided. Please check your input and try again.";
@@ -171,10 +153,6 @@ export class KenyaAdministrativeDivisions {
             }
           }
         }
-        // this.countyData[county - 1].constituencies.filter((x) => {
-        //   x.constituency_name.toLowerCase() === constituency.toLowerCase();
-        //   return x.wards;
-        // });
       }
     }
     return !!wards
@@ -182,8 +160,3 @@ export class KenyaAdministrativeDivisions {
       : "Error: Invalid parameter provided. Please check your input and try again.";
   }
 }
-
-// Testing
-
-// let test = new KenyaAdministrativeDivisions();
-// console.log(test.getAll());
