@@ -1,209 +1,189 @@
 "use strict";
 
-interface WardInfo {
-  county_name: string;
-  county_code: number;
-  constituency_name: string;
-  ward_name: string;
-}
+// interface WardInfo {
+//   county_name: string;
+//   county_code: number;
+//   constituency_name: string;
+//   ward_name: string;
+// }
 
-interface ConstituencyInfo {
-  county_name: string;
-  county_code: number;
-  constituency_name?: string;
-  wards?: string[];
-}
+// interface ConstituencyInfo {
+//   county_name: string;
+//   county_code: number;
+//   constituency_name?: string;
+//   wards?: string[];
+// }
 
-interface CountyInfo {
-  county_code: number;
-  county_name: string;
-  constituencies?: ConstituencyInfo[];
-}
+// interface CountyInfo {
+//   county_code: number;
+//   county_name: string;
+//   constituencies?: ConstituencyInfo[];
+// }
 
-const countyData: CountyInfo[] = require("../county.json");
-// read county.json file
-function readCountyData(): Promise<CountyInfo[]> {
-  return new Promise((resolve, reject) => {
-    if (countyData) {
-      resolve(countyData);
-    } else {
-      reject(new Error("Error: Unable to read county data."));
+export class KenyaAdministrativeDivisions {
+  // TODO: Break all forEach loops
+  // TODO: Use map,filter,reduce
+  private countyData: any;
+  constructor() {
+    // Read the county data
+    this.countyData = require("../county.json");
+  }
+  public getAll() {
+    return this.countyData ? this.countyData : "Unable to read county data";
+  }
+  public getCounties(input?: number | string) {
+    let counties;
+    if (!!input === false) {
+      counties = [];
+      for (let i = 0; i < this.countyData.length; i++) {
+        counties.push(this.countyData[i].county_name);
+      }
+    } else if (typeof input === "number" && input > 0 && input < 48) {
+      counties = this.countyData[input - 1];
+    } else if (typeof input === "string") {
+      for (let i = 0; i < this.countyData.length; i++) {
+        if (
+          this.countyData[i].county_name.toLowerCase() === input.toLowerCase()
+        ) {
+          counties = this.countyData[i];
+          break;
+        }
+      }
     }
-  });
-}
-// get all information(counties, constituencies, wards)
-function getAll(): Promise<CountyInfo[]> {
-  return readCountyData();
-}
-// get Counties
-function getCounties(input?: number | string): Promise<CountyInfo[]> {
-  return new Promise((resolve, reject) => {
-    readCountyData()
-      .then((data) => {
-        // county code or name
-        let result:CountyInfo[] = [];
-        // when input is empty
-        if (!input) {
-          result = data.map(({ county_code, county_name }) => ({
-            county_code,
-            county_name,
-          }));
-          
-          // when input is a number
-        } else if (typeof input === "number" && input > 0 && input < 48) {
-          const countyIndex = input - 1;
-          result.push({
-            county_code: data[countyIndex].county_code,
-            county_name: data[countyIndex].county_name,
-            constituencies: data[countyIndex].constituencies,
-          });
-          // when result is a string
-        } else if (typeof input === "string") {
-          result = data.filter(
-            (county) => county.county_name.toLowerCase() === input.toLowerCase()
-          );
-        }
-        if (result.length === 0) {
-          result.push({
-            county_code: -1,
-            county_name: "Invalid county name or code",
-            constituencies: [],
-          });
-        }
-        resolve(result);
-      })
-      .catch((error) => {
-        reject(error.message);
+
+    return !!counties
+      ? counties
+      : "Error: Invalid parameter provided. Please check your input and try again.";
+  }
+  public getConstituencies(input?: number | string) {
+    let constituencies: any;
+    if (input === null) {
+      this.countyData.forEach((county) => {
+        county.constituencies.forEach((constituency) => {
+          constituencies.push(constituency.constituency_name);
+        });
       });
-  });
-}
-// get Constituencies
-function getConstituencies(
-  input?: number | string
-): Promise<ConstituencyInfo[] | string> {
-  return new Promise((resolve, reject) => {
-    readCountyData()
-      .then((data) => {
-        let result: ConstituencyInfo[] = [];
-        // when input is empty
-        if (!input) {
-          data.forEach(({ county_name, county_code, constituencies }) => {
-            constituencies.forEach(({ constituency_name }) => {
-              result.push({
-                county_code,
-                county_name,
-                constituency_name,
+    } else if (typeof input === "number" && input > 0 && input < 48) {
+      this.countyData[input - 1].constituencies.forEach((constituency) => {
+        constituencies.push(constituency.constituency_name);
+      });
+    } else if (typeof input === "string") {
+      for (let i = 0; i < this.countyData.length; i++) {
+        for (let j = 0; j < this.countyData[i].constituencies; j++) {
+          if (
+            this.countyData[i].constituencies[
+              j
+            ].constituency_name.toLowerCase() === input.toLowerCase()
+          ) {
+            constituencies = this.countyData[i].constituencies[j];
+            break;
+          }
+        }
+      }
+    }
+    return !!constituencies
+      ? constituencies
+      : "Error: Invalid parameter provided. Please check your input and try again.";
+  }
+  public getWards(county?: string | number, constituency?: string) {
+    let wards: any;
+
+    // When no input is provided
+    if (!!county === false && !!constituency === false) {
+      this.countyData.forEach((county) => {
+        county.constituencies.forEach((ward) => {
+          wards = [...ward.wards];
+        });
+      });
+      // When only county code or name is provided
+    } else if (!!county && !!constituency === false) {
+      if (typeof county === "number" && county > 0 && county < 48) {
+        this.countyData[county - 1].constituencies.forEach((constituency) => {
+          constituency.forEach((ward) => {
+            wards = [...ward.wards];
+          });
+        });
+      } else if (typeof county === "string") {
+        for (let i = 0; i < this.countyData.length; i++) {
+          if (
+            this.countyData[i].county_name.toLowerCase() ===
+            county.toLowerCase()
+          ) {
+            this.countyData[i].constituencies.forEach((constituency) => {
+              constituency.forEach((ward) => {
+                wards = [...ward.wards];
               });
             });
-          });
-          // when input is a string
-        } else if (typeof input === "string") {
-          data.forEach(({ constituencies, county_name, county_code }) => {
-            constituencies.forEach(({ constituency_name, wards }) => {
-              if (constituency_name.toLowerCase() === input.toLowerCase()) {
-                result.push({
-                  county_code,
-                  county_name,
-                  constituency_name,
-                  wards,
-                });
-              }
-            });
-          });
+            break;
+          }
         }
-        // get constituencies by county code
-        else if (typeof input === "number" && input > 0 && input < 48) {
-          const countyIndex = input - 1;
-          result = data[countyIndex].constituencies;
+      }
+      // When only the constituency name is provided
+    } else if (!!county === false && !!constituency) {
+      for (let i = 0; i < this.countyData.length; i++) {
+        for (let j = 0; j < this.countyData[i].constituencies; j++) {
+          if (
+            this.countyData[i].constituencies[j].constituency_name
+              .toLowerCase === constituency.toLowerCase()
+          ) {
+            wards = this.countyData[i].constituencies[j].wards;
+            break;
+          }
         }
-        // when input is invalid
-        if (result.length === 0) {
-          result.push({
-            county_name: "Invalid constituency name",
-            county_code: -1,
-            constituency_name: "",
-            wards: [],
-          });
-        }
-        resolve(result);
-      })
-      .catch((error) => {
-        reject(error.message);
-      });
-  });
-}
-// get Wards
-function getWards(input?: number | string): Promise<WardInfo[] | string> {
-  return new Promise((resolve, reject) => {
-    readCountyData()
-      .then((data) => {
-        let result = [];
-        // when input is empty
-        if (!input) {
-          data.forEach(({ constituencies, county_name, county_code }) => {
-            constituencies.forEach(({ constituency_name, wards }) => {
-              wards.forEach((ward_name) => {
-                result.push({
-                  county_code,
-                  county_name,
-                  constituency_name,
-                  ward_name,
-                });
-              });
-            });
-          });
-          // when input is a string
-        } else if (typeof input === "string") {
-          data.forEach(({ constituencies, county_name, county_code }) => {
-            constituencies.forEach(({ constituency_name, wards }) => {
-              wards.forEach((ward_name) => {
-                if (ward_name.toLowerCase() === input.toLowerCase()) {
-                  result.push({
-                    county_code,
-                    county_name,
-                    constituency_name,
-                    ward_name,
-                  });
+      }
+      // When both the county name/code and the constituency names are provided
+    } else if (!!county && !!constituency) {
+      if (typeof county === "number" && county > 0 && county < 48) {
+        for (
+          let i = 0;
+          i < this.countyData[county - 1].constituencies.length;
+          i++
+        ) {
+          if (
+            this.countyData[county - 1].constituencies[
+              i
+            ].constituency_name.toLowerCase() === constituency.toLowerCase()
+          ) {
+            wards = this.countyData[county - 1].constituencies[i].wards;
+            break;
+          } else if (typeof county === "string") {
+            const targetCounty: string = county;
+            for (let i = 0; i < this.countyData.length; i++) {
+              if (
+                targetCounty.toLowerCase() ===
+                this.countyData[i].county_name.toLowerCase()
+              ) {
+                for (
+                  let j = 0;
+                  j < this.countyData[i].constituencies.length;
+                  j++
+                ) {
+                  if (
+                    this.countyData[i].constituencies[j].constituency_name ===
+                    constituency.toLowerCase()
+                  ) {
+                    wards = this.countyData[i].constituencies[j].wards;
+                    break;
+                  }
                 }
-              });
-            });
-          });
-        }
-        // get wards by county code
-        else if (typeof input === "number" && input > 0 && input < 48) {
-          const countyIndex = input - 1;
-          data[countyIndex].constituencies.forEach(
-            ({ constituency_name, wards }) => {
-              wards.forEach((ward_name) => {
-                result.push({
-                  county_code: data[countyIndex].county_code,
-                  county_name: data[countyIndex].county_name,
-                  constituency_name,
-                  ward_name,
-                });
-              });
+                break;
+              }
             }
-          );
+          }
         }
-        if (result.length === 0) {
-          result.push({
-            county_name: "Invalid ward name",
-            county_code: -1,
-            constituency_name: "",
-            ward_name: "",
-          });
-        }
-        resolve(result);
-      })
-      .catch((error) => {
-        // console.log(error);
-        reject(error.message);
-      });
-  });
+        // this.countyData[county - 1].constituencies.filter((x) => {
+        //   x.constituency_name.toLowerCase() === constituency.toLowerCase();
+        //   return x.wards;
+        // });
+      }
+    }
+    return !!wards
+      ? wards
+      : "Error: Invalid parameter provided. Please check your input and try again.";
+  }
 }
-module.exports = {
-  getAll,
-  getCounties,
-  getConstituencies,
-  getWards,
-};
+
+// Testing
+
+// let test = new KenyaAdministrativeDivisions();
+// console.log(test.getAll());

@@ -1,199 +1,201 @@
 "use strict";
-var countyData = require("../county.json");
-// read county.json file
-function readCountyData() {
-    return new Promise(function (resolve, reject) {
-        if (countyData) {
-            resolve(countyData);
+var __spreadArray =
+  (this && this.__spreadArray) ||
+  function (to, from, pack) {
+    if (pack || arguments.length === 2)
+      for (var i = 0, l = from.length, ar; i < l; i++) {
+        if (ar || !(i in from)) {
+          if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+          ar[i] = from[i];
         }
-        else {
-            reject(new Error("Error: Unable to read county data."));
+      }
+    return to.concat(ar || Array.prototype.slice.call(from));
+  };
+exports.__esModule = true;
+exports.KenyaAdministrativeDivisions = void 0;
+// interface WardInfo {
+//   county_name: string;
+//   county_code: number;
+//   constituency_name: string;
+//   ward_name: string;
+// }
+// interface ConstituencyInfo {
+//   county_name: string;
+//   county_code: number;
+//   constituency_name?: string;
+//   wards?: string[];
+// }
+// interface CountyInfo {
+//   county_code: number;
+//   county_name: string;
+//   constituencies?: ConstituencyInfo[];
+// }
+var KenyaAdministrativeDivisions = /** @class */ (function () {
+  function KenyaAdministrativeDivisions() {
+    // Read the county data
+    this.countyData = require("../county.json");
+  }
+  KenyaAdministrativeDivisions.prototype.getAll = function () {
+    return this.countyData ? this.countyData : "Unable to read county data";
+  };
+  KenyaAdministrativeDivisions.prototype.getCounties = function (input) {
+    var counties;
+    if (!!input === false) {
+      counties = [];
+      for (var i = 0; i < this.countyData.length; i++) {
+        counties.push(this.countyData[i].county_name);
+      }
+    } else if (typeof input === "number" && input > 0 && input < 48) {
+      counties = this.countyData[input - 1];
+    } else if (typeof input === "string") {
+      for (var i = 0; i < this.countyData.length; i++) {
+        if (
+          this.countyData[i].county_name.toLowerCase() === input.toLowerCase()
+        ) {
+          counties = this.countyData[i];
+          break;
         }
-    });
-}
-// get all information(counties, constituencies, wards)
-function getAll() {
-    return readCountyData();
-}
-// get Counties
-function getCounties(input) {
-    return new Promise(function (resolve, reject) {
-        readCountyData()
-            .then(function (data) {
-            // county code or name
-            var result = [];
-            // when input is empty
-            if (!input) {
-                result = data.map(function (_a) {
-                    var county_code = _a.county_code, county_name = _a.county_name;
-                    return ({
-                        county_code: county_code,
-                        county_name: county_name,
-                    });
-                });
-                // when input is a number
-            }
-            else if (typeof input === "number" && input > 0 && input < 48) {
-                var countyIndex = input - 1;
-                result.push({
-                    county_code: data[countyIndex].county_code,
-                    county_name: data[countyIndex].county_name,
-                    constituencies: data[countyIndex].constituencies,
-                });
-                // when result is a string
-            }
-            else if (typeof input === "string") {
-                result = data.filter(function (county) { return county.county_name.toLowerCase() === input.toLowerCase(); });
-            }
-            if (result.length === 0) {
-                result.push({
-                    county_code: -1,
-                    county_name: "Invalid county name or code",
-                    constituencies: [],
-                });
-            }
-            resolve(result);
-        })
-            .catch(function (error) {
-            reject(error.message);
+      }
+    }
+    return !!counties
+      ? counties
+      : "Error: Invalid parameter provided. Please check your input and try again.";
+  };
+  KenyaAdministrativeDivisions.prototype.getConstituencies = function (input) {
+    var constituencies;
+    if (input === null) {
+      this.countyData.forEach(function (county) {
+        county.constituencies.forEach(function (constituency) {
+          constituencies.push(constituency.constituency_name);
         });
-    });
-}
-// get Constituencies
-function getConstituencies(input) {
-    return new Promise(function (resolve, reject) {
-        readCountyData()
-            .then(function (data) {
-            var result = [];
-            // when input is empty
-            if (!input) {
-                data.forEach(function (_a) {
-                    var county_name = _a.county_name, county_code = _a.county_code, constituencies = _a.constituencies;
-                    constituencies.forEach(function (_a) {
-                        var constituency_name = _a.constituency_name;
-                        result.push({
-                            county_code: county_code,
-                            county_name: county_name,
-                            constituency_name: constituency_name,
-                        });
-                    });
-                });
-                // when input is a string
-            }
-            else if (typeof input === "string") {
-                data.forEach(function (_a) {
-                    var constituencies = _a.constituencies, county_name = _a.county_name, county_code = _a.county_code;
-                    constituencies.forEach(function (_a) {
-                        var constituency_name = _a.constituency_name, wards = _a.wards;
-                        if (constituency_name.toLowerCase() === input.toLowerCase()) {
-                            result.push({
-                                county_code: county_code,
-                                county_name: county_name,
-                                constituency_name: constituency_name,
-                                wards: wards,
-                            });
-                        }
-                    });
-                });
-            }
-            // get constituencies by county code
-            else if (typeof input === "number" && input > 0 && input < 48) {
-                var countyIndex = input - 1;
-                result = data[countyIndex].constituencies;
-            }
-            // when input is invalid
-            if (result.length === 0) {
-                result.push({
-                    county_name: "Invalid constituency name",
-                    county_code: -1,
-                    constituency_name: "",
-                    wards: [],
-                });
-            }
-            resolve(result);
-        })
-            .catch(function (error) {
-            reject(error.message);
+      });
+    } else if (typeof input === "number" && input > 0 && input < 48) {
+      this.countyData[input - 1].constituencies.forEach(function (
+        constituency
+      ) {
+        constituencies.push(constituency.constituency_name);
+      });
+    } else if (typeof input === "string") {
+      for (var i = 0; i < this.countyData.length; i++) {
+        for (var j = 0; j < this.countyData[i].constituencies; j++) {
+          if (
+            this.countyData[i].constituencies[
+              j
+            ].constituency_name.toLowerCase() === input.toLowerCase()
+          ) {
+            constituencies = this.countyData[i].constituencies[j];
+            break;
+          }
+        }
+      }
+    }
+    return !!constituencies
+      ? constituencies
+      : "Error: Invalid parameter provided. Please check your input and try again.";
+  };
+  KenyaAdministrativeDivisions.prototype.getWards = function (
+    county,
+    constituency
+  ) {
+    var wards;
+    // When no input is provided
+    if (!!county === false && !!constituency === false) {
+      this.countyData.forEach(function (county) {
+        county.constituencies.forEach(function (ward) {
+          wards = __spreadArray([], ward.wards, true);
         });
-    });
-}
-// get Wards
-function getWards(input) {
-    return new Promise(function (resolve, reject) {
-        readCountyData()
-            .then(function (data) {
-            var result = [];
-            // when input is empty
-            if (!input) {
-                data.forEach(function (_a) {
-                    var constituencies = _a.constituencies, county_name = _a.county_name, county_code = _a.county_code;
-                    constituencies.forEach(function (_a) {
-                        var constituency_name = _a.constituency_name, wards = _a.wards;
-                        wards.forEach(function (ward_name) {
-                            result.push({
-                                county_code: county_code,
-                                county_name: county_name,
-                                constituency_name: constituency_name,
-                                ward_name: ward_name,
-                            });
-                        });
-                    });
-                });
-                // when input is a string
-            }
-            else if (typeof input === "string") {
-                data.forEach(function (_a) {
-                    var constituencies = _a.constituencies, county_name = _a.county_name, county_code = _a.county_code;
-                    constituencies.forEach(function (_a) {
-                        var constituency_name = _a.constituency_name, wards = _a.wards;
-                        wards.forEach(function (ward_name) {
-                            if (ward_name.toLowerCase() === input.toLowerCase()) {
-                                result.push({
-                                    county_code: county_code,
-                                    county_name: county_name,
-                                    constituency_name: constituency_name,
-                                    ward_name: ward_name,
-                                });
-                            }
-                        });
-                    });
-                });
-            }
-            // get wards by county code
-            else if (typeof input === "number" && input > 0 && input < 48) {
-                var countyIndex_1 = input - 1;
-                data[countyIndex_1].constituencies.forEach(function (_a) {
-                    var constituency_name = _a.constituency_name, wards = _a.wards;
-                    wards.forEach(function (ward_name) {
-                        result.push({
-                            county_code: data[countyIndex_1].county_code,
-                            county_name: data[countyIndex_1].county_name,
-                            constituency_name: constituency_name,
-                            ward_name: ward_name,
-                        });
-                    });
-                });
-            }
-            if (result.length === 0) {
-                result.push({
-                    county_name: "Invalid ward name",
-                    county_code: -1,
-                    constituency_name: "",
-                    ward_name: "",
-                });
-            }
-            resolve(result);
-        })
-            .catch(function (error) {
-            // console.log(error);
-            reject(error.message);
+      });
+      // When only county code or name is provided
+    } else if (!!county && !!constituency === false) {
+      if (typeof county === "number" && county > 0 && county < 48) {
+        this.countyData[county - 1].constituencies.forEach(function (
+          constituency
+        ) {
+          constituency.forEach(function (ward) {
+            wards = __spreadArray([], ward.wards, true);
+          });
         });
-    });
-}
-module.exports = {
-    getAll: getAll,
-    getCounties: getCounties,
-    getConstituencies: getConstituencies,
-    getWards: getWards,
-};
+      } else if (typeof county === "string") {
+        for (var i = 0; i < this.countyData.length; i++) {
+          if (
+            this.countyData[i].county_name.toLowerCase() ===
+            county.toLowerCase()
+          ) {
+            this.countyData[i].constituencies.forEach(function (constituency) {
+              constituency.forEach(function (ward) {
+                wards = __spreadArray([], ward.wards, true);
+              });
+            });
+            break;
+          }
+        }
+      }
+      // When only the constituency name is provided
+    } else if (!!county === false && !!constituency) {
+      for (var i = 0; i < this.countyData.length; i++) {
+        for (var j = 0; j < this.countyData[i].constituencies; j++) {
+          if (
+            this.countyData[i].constituencies[j].constituency_name
+              .toLowerCase === constituency.toLowerCase()
+          ) {
+            wards = this.countyData[i].constituencies[j].wards;
+            break;
+          }
+        }
+      }
+      // When both the county name/code and the constituency names are provided
+    } else if (!!county && !!constituency) {
+      if (typeof county === "number" && county > 0 && county < 48) {
+        for (
+          var i = 0;
+          i < this.countyData[county - 1].constituencies.length;
+          i++
+        ) {
+          if (
+            this.countyData[county - 1].constituencies[
+              i
+            ].constituency_name.toLowerCase() === constituency.toLowerCase()
+          ) {
+            wards = this.countyData[county - 1].constituencies[i].wards;
+            break;
+          } else if (typeof county === "string") {
+            var targetCounty = county;
+            for (var i_1 = 0; i_1 < this.countyData.length; i_1++) {
+              if (
+                targetCounty.toLowerCase() ===
+                this.countyData[i_1].county_name.toLowerCase()
+              ) {
+                for (
+                  var j = 0;
+                  j < this.countyData[i_1].constituencies.length;
+                  j++
+                ) {
+                  if (
+                    this.countyData[i_1].constituencies[j].constituency_name ===
+                    constituency.toLowerCase()
+                  ) {
+                    wards = this.countyData[i_1].constituencies[j].wards;
+                    break;
+                  }
+                }
+                break;
+              }
+            }
+          }
+        }
+        // this.countyData[county - 1].constituencies.filter((x) => {
+        //   x.constituency_name.toLowerCase() === constituency.toLowerCase();
+        //   return x.wards;
+        // });
+      }
+    }
+    return !!wards
+      ? wards
+      : "Error: Invalid parameter provided. Please check your input and try again.";
+  };
+  return KenyaAdministrativeDivisions;
+})();
+exports.KenyaAdministrativeDivisions = KenyaAdministrativeDivisions;
 //# sourceMappingURL=index.js.map
+let test = new KenyaAdministrativeDivisions();
+console.log(test.getCounties("homabay"));
