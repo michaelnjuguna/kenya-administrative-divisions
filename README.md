@@ -1,25 +1,23 @@
-# kenya-administrative-divisions
+# Kenya Administrative Divisions
 
-## Effortlessly retrieve the names of Kenya's counties, constituencies, and wards
+The **Kenya Administrative Divisions** is a package that provides functionality to retrieve administrative divisions data about Kenya. It includes information about counties, constituencies, and wards.
 
 ## Table of Contents
 
-+ [Install](#install)
-+ [Usage](#usage)
-+ [Get all](#get-all)
-+ [Get counties](#get-counties)
-+ [Get constituencies](#get-constituencies)
-+ [Get wards](#get-wards)
+- [Installation](#installation)
+- [Usage](#usage)
+  - [Getting started](#getting-started)
+  - [Methods available](#methods-available)
+    - [Get all](#get-all)
+    - [Get counties](#get-counties)
+    - [Get constituencies](#get-constituencies)
+    - [Get wards](#get-wards)
+- [Contributing](#contributing)
+- [Support](#support)
 
-## Features
+## Installation
 
-+ Get names,codes and constituencies of all counties in kenya
-+ Get names and wards of all constituences in kenya
-+ Get names of all wards in kenya
-
-## Install
-
-```sh
+```bash
 # npm
 npm install kenya-administrative-divisions
 
@@ -32,133 +30,75 @@ yarn add kenya-administrative-divisions
 
 ## Usage
 
-Once the package is installed you use the require approach
+### Getting started
+
+To use the library, instantiate the `KenyaAdministrativeDivisions` class:
 
 ```javascript
-const kenyaAdministrativeDivisions = require("kenya-administrative-divisions");
+const {
+  kenyaAdministrativeDivisions,
+} = require("kenya-administrative-divisions");
+
+// Instantiate the class
+const kenyaAdmin = new KenyaAdministrativeDivisions();
 ```
 
-Or you can use the import approach
+## Methods available
+
+### Get All
 
 ```javascript
-import {getAll,getConstituencies,getWards,getCounties} from "kenya-administrative-divisions";
+// Get All the data
+const data = kenyaAdmin.getAll();
 ```
 
-**NB: Every function returns a promise**
-
-## Get all
-
-This will retrieve all counties,their names,their code and their constituencies. The constituencies will also include the ward names. Do not pass parameters to this function.
+### Get Counties
 
 ```javascript
-// When using require approach
-const kenyaAdministrativeDivisions = require("kenya-administrative-divisions");
+// Get all the counties names
+const counties = kenyaAdmin.getCounties();
 
-kenyaAdministrativeDivisions.getAll().then((data) => {
-    console.log(data);
-    }).catch((error) => {
-    console.log(error);
-});  
+// Get the details of the county whose county code is passed as shown
+const county = kenyaAdmin.getCounties(1);
 
-// when using import approach
-import {getAll,getConstituencies,getWards,getCounties} from "kenya-administrative-divisions";
-
-// get all function 
-getAll().then((data) => {
-    console.log(data);
-    }).catch((error) => {
-    console.log(error);
-});  
+// Get the details of a particular county by passing its name
+const county = kenyaAdmin.getCounties("Nairobi");
 ```
 
-**All examples shown below use the require approach if you are using the import approach just remove  *kenyaAdministrationDivisons* before the function call**
-
-## Get counties
-
-This will retrieve information about counties.
+### Get Constituencies
 
 ```javascript
-const kenyaAdministrativeDivisions = require("kenya-administrative-divisions");
-// To get all counties and their county code
-kenyaAdministrativeDivisions.getCounties().then((data) => {
-    console.log(data);
-    }).catch((error) => {
-    console.log(error);
-});
+// Returns a list of all constituency names
+const constituencies = kenyaAdmin.getConstituencies();
 
-// To get the information  of a particular county pass the county name 
-kenyaAdministrativeDivisions.getCounties("nairobi").then((data) => {
-    console.log(data);
-    }).catch((error) => {
-    console.log(error);
-});
+// Returns the constituencies of the county whose county code has been passed
+const constituency = kenyaAdmin.getConstituencies(1);
 
-// Or the county code
-kenyaAdministrativeDivisions.getCounties(47).then((data) => {
-    console.log(data);
-    }).catch((error) => {
-    console.log(error);
-});
+// Returns details of the constituency whose name has been passed
+const data = kenyaAdmin.getConstituencies("Westlands");
 ```
 
-## Get constituencies
-
-This will retrieve information about constituencies
+### Get wards
 
 ```javascript
-const kenyaAdministrativeDivisions = require("kenya-administrative-divisions");
+// Returns all ward names
+const wards = kenyaAdmin.getWards();
 
-// To get all constituencies
-kenyaAdministrativeDivisions.getConstituencies().then((data) => {
-    console.log(data);
-    }).catch((error) => {
-    console.log(error);
-});  
+// Returns wards names of a particular county by passing its county code
+const wards = kenyaAdmin.getWards(1);
 
-// To get information about a particular constituency pass the constituency name to the function
-kenyaAdministrativeDivisions.getConstituencies("Westlands").then((data) => {
-    console.log(data);
-    }).catch((error) => {
-    console.log(error);
-});  
+// Return wards names of a particular county by passing its name
+const wards = kenyaAdmin.getWards("Nairobi");
 
-// To get all constituencies of a particular county pass the county code as a parameter
-kenyaAdministrativeDivisions.getConstituencies(1).then((data) => {
-    console.log(data);
-    }).catch((error) => {
-    console.log(error);
-}); 
+// Return ward names of a particular county and constituency by passing the respective county code/name(optional) and constituency name(optional)
+const wards = kenyaAdmin.getWards(1, "Mvita");
+const wards = kenyaAdmin.getWards("Mombasa", "Mvita");
+
+// Get the wards of a particular constituency by passing its name as shown
+const wards = kenyaAdmin.getWards(null, "Mvita");
 ```
 
-## Get wards
-
-This will retrieve all information about wards
-
-```javascript
-const kenyaAdministrativeDivisions = require("kenya-administrative-divisions");
-// To get all the wards
-kenyaAdministrativeDivisions.getWards().then((data) => {
-    console.log(data);
-    }).catch((error) => {
-    console.log(error);
-});
-
-// To get a particular ward pass the name of the wards as a parameter
-kenyaAdministrativeDivisions.getWards("Kitisuru").then((data) => {
-    console.log(data);
-    }).catch((error) => {
-    console.log(error);
-});
-
-// To get the wards of a particular county, pass the county code to the function
-kenyaAdministrativeDivisions.getWards(47).then((data)=>{
-    console.log(data);
-}).catch((error)=>{
-    console.log(error)
-})
-```
-
-### Contributing
+## Contributing
 
 1. Fork this repository.
 2. Create new branch with feature name.
@@ -167,12 +107,12 @@ kenyaAdministrativeDivisions.getWards(47).then((data)=>{
 5. Push your code to your fork repository.
 6. Create pull request.
 
-### Support
+## Support
 
-If you like this project, You can support me with starring ⭐ this repository.
+If you like this project, you can support me with starring ⭐ this repository.
 
-### License
+## License
 
-[MIT](LICENSE.txt)
+[MIT](license.txt)
 
-Made with 💙
+Made with 💜
