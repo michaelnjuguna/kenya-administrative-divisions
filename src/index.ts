@@ -72,17 +72,19 @@ export class KenyaAdministrativeDivisions {
 
     // When no input is provided
     if (!!county === false && !!constituency === false) {
+      wards = [];
       this.countyData.forEach((county) => {
         county.constituencies.forEach((ward) => {
-          wards = [...ward.wards];
+          wards.push(ward.wards);
         });
       });
       // When only county code or name is provided
     } else if (!!county && !!constituency === false) {
+      wards = [];
       if (typeof county === "number" && county > 0 && county < 48) {
         this.countyData[county - 1].constituencies.forEach((constituency) => {
-          constituency.forEach((ward) => {
-            wards = [...ward.wards];
+          constituency.wards.forEach((ward) => {
+            wards.push(ward);
           });
         });
       } else if (typeof county === "string") {
@@ -92,8 +94,8 @@ export class KenyaAdministrativeDivisions {
             county.toLowerCase()
           ) {
             this.countyData[i].constituencies.forEach((constituency) => {
-              constituency.forEach((ward) => {
-                wards = [...ward.wards];
+              constituency.wards.forEach((ward) => {
+                wards.push(ward);
               });
             });
             break;
@@ -103,10 +105,11 @@ export class KenyaAdministrativeDivisions {
       // When only the constituency name is provided
     } else if (!!county === false && !!constituency) {
       for (let i = 0; i < this.countyData.length; i++) {
-        for (let j = 0; j < this.countyData[i].constituencies; j++) {
+        for (let j = 0; j < this.countyData[i].constituencies.length; j++) {
           if (
-            this.countyData[i].constituencies[j].constituency_name
-              .toLowerCase === constituency.toLowerCase()
+            this.countyData[i].constituencies[
+              j
+            ].constituency_name.toLowerCase() === constituency.toLowerCase()
           ) {
             wards = this.countyData[i].constituencies[j].wards;
             break;
@@ -128,33 +131,31 @@ export class KenyaAdministrativeDivisions {
           ) {
             wards = this.countyData[county - 1].constituencies[i].wards;
             break;
-          } else if (typeof county === "string") {
-            const targetCounty: string = county;
-            for (let i = 0; i < this.countyData.length; i++) {
+          }
+        }
+      } else if (typeof county === "string") {
+        const targetCounty: string = county;
+        for (let i = 0; i < this.countyData.length; i++) {
+          if (
+            targetCounty.toLowerCase() ===
+            this.countyData[i].county_name.toLowerCase()
+          ) {
+            for (let j = 0; j < this.countyData[i].constituencies.length; j++) {
               if (
-                targetCounty.toLowerCase() ===
-                this.countyData[i].county_name.toLowerCase()
+                this.countyData[i].constituencies[
+                  j
+                ].constituency_name.toLowerCase() === constituency.toLowerCase()
               ) {
-                for (
-                  let j = 0;
-                  j < this.countyData[i].constituencies.length;
-                  j++
-                ) {
-                  if (
-                    this.countyData[i].constituencies[j].constituency_name ===
-                    constituency.toLowerCase()
-                  ) {
-                    wards = this.countyData[i].constituencies[j].wards;
-                    break;
-                  }
-                }
+                wards = this.countyData[i].constituencies[j].wards;
                 break;
               }
             }
+            break;
           }
         }
       }
     }
+
     return !!wards
       ? wards
       : "Error: Invalid parameter provided. Please check your input and try again.";
