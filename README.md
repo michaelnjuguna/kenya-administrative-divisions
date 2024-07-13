@@ -113,6 +113,6 @@ If you like this project, you can support me with starring ⭐ this repository.
 
 ## License
 
-[MIT](license.txt)
+[MIT](LICENSE.txt)
 
 Made with 💜
