@@ -18,12 +18,11 @@
     "url": "git+https://github.com/michaelnjuguna/kenya-administrative-divisions.git"
   },
   "keywords": [
-    "kenya",
-    "administrative",
-    "divisions",
+    "kenya administrative divisions",
     "counties",
     "constituencies",
-    "wards"
+    "wards",
+    "kenya"
   ],
   "author": "michael njuguna michaelnjuguna184@gmail.com",
   "license": "MIT",

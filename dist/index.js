@@ -68,8 +68,10 @@ var KenyaAdministrativeDivisions = /** @class */ (function () {
         if (!!county === false && !!constituency === false) {
             wards = [];
             this.countyData.forEach(function (county) {
-                county.constituencies.forEach(function (ward) {
-                    wards.push(ward.wards);
+                county.constituencies.forEach(function (constituency) {
+                    constituency.wards.forEach(function (ward) {
+                        wards.push(ward);
+                    });
                 });
             });
             // When only county code or name is provided

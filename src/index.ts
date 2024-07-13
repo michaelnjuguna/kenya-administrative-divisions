@@ -74,8 +74,10 @@ export class KenyaAdministrativeDivisions {
     if (!!county === false && !!constituency === false) {
       wards = [];
       this.countyData.forEach((county) => {
-        county.constituencies.forEach((ward) => {
-          wards.push(ward.wards);
+        county.constituencies.forEach((constituency) => {
+          constituency.wards.forEach((ward) => {
+            wards.push(ward);
+          });
         });
       });
       // When only county code or name is provided
