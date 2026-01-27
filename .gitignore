@@ -4,6 +4,7 @@
 .DS_Store
 node_modules/
 coverage/
+dist/
 sauce_connect.log
 backup/
 /.husky/
