@@ -6,12 +6,12 @@ The **Kenya Administrative Divisions** is a package that provides functionality 
 
 - [Installation](#installation)
 - [Usage](#usage)
-  - [Getting started](#getting-started)
-  - [Methods available](#methods-available)
-    - [Get all](#get-all)
-    - [Get counties](#get-counties)
-    - [Get constituencies](#get-constituencies)
-    - [Get wards](#get-wards)
+    - [Getting started](#getting-started)
+    - [Methods available](#methods-available)
+        - [Get all](#get-all)
+        - [Get counties](#get-counties)
+        - [Get constituencies](#get-constituencies)
+        - [Get wards](#get-wards)
 - [Contributing](#contributing)
 - [Support](#support)
 
@@ -32,12 +32,42 @@ yarn add kenya-administrative-divisions
 
 ### Getting started
 
-To use the library, instantiate the `KenyaAdministrativeDivisions` class:
+To use the library, instantiate the `KenyaAdministrativeDivisions` class as shown below:
+
+**ES Modules**
 
 ```javascript
-const {
-  kenyaAdministrativeDivisions,
-} = require("kenya-administrative-divisions");
+// Named import
+import { KenyaAdministrativeDivisions } from "kenya-administrative-divisions";
+
+// Or default import
+import KenyaAdministrativeDivisions from "kenya-administrative-divisions";
+
+// Instantiate the class
+const kenyaAdmin = new KenyaAdministrativeDivisions();
+```
+
+**CommonJS**
+
+```javascript
+// Named destructuring
+const { KenyaAdministrativeDivisions } = require("kenya-administrative-divisions");
+
+// Or default import
+const KenyaAdministrativeDivisions = require("kenya-administrative-divisions").default;
+
+// Instantiate the class
+const kenyaAdmin = new KenyaAdministrativeDivisions();
+```
+
+**TypeScript**
+
+```typescript
+// Import types
+import type { CountyInfo, ConstituencyInfo, WardInfo } from "kenya-administrative-divisions";
+
+// Import the class
+import { KenyaAdministrativeDivisions } from "kenya-administrative-divisions";
 
 // Instantiate the class
 const kenyaAdmin = new KenyaAdministrativeDivisions();
