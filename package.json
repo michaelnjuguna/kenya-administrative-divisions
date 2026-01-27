@@ -1,37 +1,51 @@
 {
-  "name": "kenya-administrative-divisions",
-  "version": "0.0.18",
-  "description": "Kenya-administrative-divisions is an npm package that provides information about counties, constituencies, and wards in Kenya. This package can be used by developers who are building web or mobile applications that require access to geographic data about Kenya.",
-  "main": "dist/index.js",
-  "scripts": {
-    "build": "tsc",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "files": [
-    "dist",
-    "types/index.d.ts",
-    "county.json"
-  ],
-  "typings": "types/index.d.ts",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/michaelnjuguna/kenya-administrative-divisions.git"
-  },
-  "keywords": [
-    "kenya administrative divisions",
-    "counties",
-    "constituencies",
-    "wards",
-    "kenya"
-  ],
-  "author": "michael njuguna michaelnjuguna184@gmail.com",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/michaelnjuguna/kenya-administrative-divisions/issues"
-  },
-  "homepage": "https://github.com/michaelnjuguna/kenya-administrative-divisions#readme",
-  "devDependencies": {
-    "@types/node": "^20.8.3",
-    "typescript": "^5.2.2"
-  }
+	"name": "kenya-administrative-divisions",
+	"version": "0.0.18",
+	"description": "Kenya-administrative-divisions is an npm package that provides information about counties, constituencies, and wards in Kenya. This package can be used by developers who are building web or mobile applications that require access to geographic data about Kenya.",
+	"type": "module",
+	"main": "./dist/index.cjs",
+	"module": "./dist/index.js",
+	"types": "./dist/index.d.ts",
+	"exports": {
+		".": {
+			"import": {
+				"types": "./dist/index.d.ts",
+				"default": "./dist/index.js"
+			},
+			"require": {
+				"types": "./dist/index.d.cts",
+				"default": "./dist/index.cjs"
+			}
+		}
+	},
+	"scripts": {
+		"build": "tsup src/index.ts --format cjs,esm --dts",
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"files": [
+		"dist"
+	],
+	"typings": "types/index.d.ts",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/michaelnjuguna/kenya-administrative-divisions.git"
+	},
+	"keywords": [
+		"kenya administrative divisions",
+		"counties",
+		"constituencies",
+		"wards",
+		"kenya"
+	],
+	"author": "michael njuguna michaelnjuguna184@gmail.com",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/michaelnjuguna/kenya-administrative-divisions/issues"
+	},
+	"homepage": "https://github.com/michaelnjuguna/kenya-administrative-divisions#readme",
+	"devDependencies": {
+		"@types/node": "^20.8.3",
+		"tsup": "^8.5.1",
+		"typescript": "^5.2.2"
+	}
 }
