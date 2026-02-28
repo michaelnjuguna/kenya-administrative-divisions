@@ -1,12 +1,14 @@
 "use strict";
 import GetAll from "./actions/getAll";
-import { County } from "./interfaces";
-export class KenyaAdministrativeDivisions {
+import { County, Constituency, Ward } from "./interfaces";
+class KenyaAdministrativeDivisions {
   // TODO: Break all forEach loops
   // TODO: Use map,filter,reduce
   // TODO: Add tests
   // TODO: Move to actions pattern
-  //
+  // TODO: Add changelogs
+  // TODO: Add github actions
+  // TODO: Update documentation
   private countyData: any;
   constructor() {
     // Read the county data
@@ -44,16 +46,18 @@ export class KenyaAdministrativeDivisions {
     let constituencies: any;
     if (!!input === false) {
       constituencies = [];
-      this.countyData.forEach((county) => {
+      this.countyData.forEach((county: County) => {
         county.constituencies.forEach((constituency) => {
           constituencies.push(constituency.constituency_name);
         });
       });
     } else if (typeof input === "number" && input > 0 && input < 48) {
       constituencies = [];
-      this.countyData[input - 1].constituencies.forEach((constituency) => {
-        constituencies.push(constituency.constituency_name);
-      });
+      this.countyData[input - 1].constituencies.forEach(
+        (constituency: Constituency) => {
+          constituencies.push(constituency.constituency_name);
+        },
+      );
     } else if (typeof input === "string") {
       for (let i = 0; i < this.countyData.length; i++) {
         for (let j = 0; j < this.countyData[i].constituencies.length; j++) {
@@ -79,8 +83,8 @@ export class KenyaAdministrativeDivisions {
     // When no input is provided
     if (!!county === false && !!constituency === false) {
       wards = [];
-      this.countyData.forEach((county) => {
-        county.constituencies.forEach((constituency) => {
+      this.countyData.forEach((county: County) => {
+        county.constituencies.forEach((constituency: Constituency) => {
           constituency.wards.forEach((ward) => {
             wards.push(ward);
           });
@@ -90,22 +94,26 @@ export class KenyaAdministrativeDivisions {
     } else if (!!county && !!constituency === false) {
       wards = [];
       if (typeof county === "number" && county > 0 && county < 48) {
-        this.countyData[county - 1].constituencies.forEach((constituency) => {
-          constituency.wards.forEach((ward) => {
-            wards.push(ward);
-          });
-        });
+        this.countyData[county - 1].constituencies.forEach(
+          (constituency: Constituency) => {
+            constituency.wards.forEach((ward: Ward) => {
+              wards.push(ward);
+            });
+          },
+        );
       } else if (typeof county === "string") {
         for (let i = 0; i < this.countyData.length; i++) {
           if (
             this.countyData[i].county_name.toLowerCase() ===
             county.toLowerCase()
           ) {
-            this.countyData[i].constituencies.forEach((constituency) => {
-              constituency.wards.forEach((ward) => {
-                wards.push(ward);
-              });
-            });
+            this.countyData[i].constituencies.forEach(
+              (constituency: Constituency) => {
+                constituency.wards.forEach((ward: Ward) => {
+                  wards.push(ward);
+                });
+              },
+            );
             break;
           }
         }
@@ -169,3 +177,5 @@ export class KenyaAdministrativeDivisions {
       : "Error: Invalid parameter provided. Please check your input and try again.";
   }
 }
+
+export default new KenyaAdministrativeDivisions();
