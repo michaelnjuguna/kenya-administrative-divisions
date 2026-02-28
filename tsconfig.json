@@ -1,9 +1,13 @@
 {
   "compilerOptions": {
     "outDir": "./dist",
+    "declaration": true,
+    "declarationMap": true,
+    "declarationDir": "./dist/types",
+    "emitDeclarationOnly": false,
     "rootDir": "./src",
     "lib": ["es2016"],
-    "sourceMap": true
+    "sourceMap": true,
   },
-  "include": ["src/**/*.ts"]
+  "include": ["src/**/*.ts"],
 }

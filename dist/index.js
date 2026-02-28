@@ -1,5 +1,5 @@
 "use strict";
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", { value: true });
 exports.KenyaAdministrativeDivisions = void 0;
 var KenyaAdministrativeDivisions = /** @class */ (function () {
     function KenyaAdministrativeDivisions() {

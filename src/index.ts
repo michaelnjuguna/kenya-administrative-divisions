@@ -1,14 +1,20 @@
 "use strict";
+import GetAll from "./actions/getAll";
+import { County } from "./interfaces";
 export class KenyaAdministrativeDivisions {
   // TODO: Break all forEach loops
   // TODO: Use map,filter,reduce
+  // TODO: Add tests
+  // TODO: Move to actions pattern
+  //
   private countyData: any;
   constructor() {
     // Read the county data
     this.countyData = require("../county.json");
   }
-  public getAll() {
-    return this.countyData ? this.countyData : "Unable to read county data";
+  // Get all the information
+  public getAll(): County[] | string {
+    return new GetAll(this.countyData).execute();
   }
   public getCounties(input?: number | string) {
     let counties;
