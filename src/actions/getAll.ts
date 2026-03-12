@@ -1,11 +1,11 @@
-import { County } from "../interfaces";
+import { County } from "../models";
 
 class GetAll {
   constructor(private countyData: County[]) {
     this.countyData = countyData;
   }
 
-  execute(): County[] | string {
+  call(): County[] | string {
     try {
       if (!this.countyData) {
         throw new Error("Unable to read county data");

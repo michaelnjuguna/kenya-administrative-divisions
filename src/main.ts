@@ -1,7 +1,8 @@
 "use strict";
 import GetAll from "./actions/getAll";
-import { County, Constituency, Ward } from "./interfaces";
-class KenyaAdministrativeDivisions {
+import GetCounties from "./actions/getCounties";
+import { County, Constituency, Ward } from "./models";
+class Main {
   // TODO: Break all forEach loops
   // TODO: Use map,filter,reduce
   // TODO: Add tests
@@ -9,6 +10,9 @@ class KenyaAdministrativeDivisions {
   // TODO: Add changelogs
   // TODO: Add github actions
   // TODO: Update documentation
+  // TODO: Use ESM
+  // TODO: Test coverage
+
   private countyData: any;
   constructor() {
     // Read the county data
@@ -16,31 +20,10 @@ class KenyaAdministrativeDivisions {
   }
   // Get all the information
   public getAll(): County[] | string {
-    return new GetAll(this.countyData).execute();
+    return new GetAll(this.countyData).call();
   }
-  public getCounties(input?: number | string) {
-    let counties;
-    if (!!input === false) {
-      counties = [];
-      for (let i = 0; i < this.countyData.length; i++) {
-        counties.push(this.countyData[i].county_name);
-      }
-    } else if (typeof input === "number" && input > 0 && input < 48) {
-      counties = this.countyData[input - 1];
-    } else if (typeof input === "string") {
-      for (let i = 0; i < this.countyData.length; i++) {
-        if (
-          this.countyData[i].county_name.toLowerCase() === input.toLowerCase()
-        ) {
-          counties = this.countyData[i];
-          break;
-        }
-      }
-    }
-
-    return !!counties
-      ? counties
-      : "Error: Invalid parameter provided. Please check your input and try again.";
+  public getCounties(input?: number | string):any {
+    return new GetCounties(this.countyData,input).call();
   }
   public getConstituencies(input?: number | string) {
     let constituencies: any;
@@ -178,4 +161,4 @@ class KenyaAdministrativeDivisions {
   }
 }
 
-export default new KenyaAdministrativeDivisions();
+export const KenyaAdministrativeDivisions = new Main();
