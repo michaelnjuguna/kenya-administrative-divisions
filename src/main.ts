@@ -14,7 +14,6 @@ class Main {
   // TODO: Add changelogs
   // TODO: Add github actions
   // TODO: Update documentation
-  // TODO: Use ESM
 
   private countyData: any;
   constructor() {
