@@ -2,8 +2,13 @@
 import GetAll from "./actions/getAll";
 import GetCounties from "./actions/getCounties";
 import GetConstituencies from "./actions/getConstituencies";
+import GetWards from "./actions/getWards";
 import { County, Constituency, Ward } from "./models";
-import { GetCountiesParams, GetConstituenciesParams } from "./params";
+import {
+  GetCountiesParams,
+  GetConstituenciesParams,
+  GetWardsParams,
+} from "./params";
 
 class Main {
   // TODO: Break all forEach loops
@@ -81,104 +86,8 @@ class Main {
       );
     }
   }
-  public getWards(county?: string | number, constituency?: string) {
-    let wards: any;
-
-    // When no input is provided
-    if (!!county === false && !!constituency === false) {
-      wards = [];
-      this.countyData.forEach((county: County) => {
-        county.constituencies.forEach((constituency: Constituency) => {
-          constituency.wards.forEach((ward) => {
-            wards.push(ward);
-          });
-        });
-      });
-      // When only county code or name is provided
-    } else if (!!county && !!constituency === false) {
-      wards = [];
-      if (typeof county === "number" && county > 0 && county < 48) {
-        this.countyData[county - 1].constituencies.forEach(
-          (constituency: Constituency) => {
-            constituency.wards.forEach((ward: Ward) => {
-              wards.push(ward);
-            });
-          },
-        );
-      } else if (typeof county === "string") {
-        for (let i = 0; i < this.countyData.length; i++) {
-          if (
-            this.countyData[i].county_name.toLowerCase() ===
-            county.toLowerCase()
-          ) {
-            this.countyData[i].constituencies.forEach(
-              (constituency: Constituency) => {
-                constituency.wards.forEach((ward: Ward) => {
-                  wards.push(ward);
-                });
-              },
-            );
-            break;
-          }
-        }
-      }
-      // When only the constituency name is provided
-    } else if (!!county === false && !!constituency) {
-      for (let i = 0; i < this.countyData.length; i++) {
-        for (let j = 0; j < this.countyData[i].constituencies.length; j++) {
-          if (
-            this.countyData[i].constituencies[
-              j
-            ].constituency_name.toLowerCase() === constituency.toLowerCase()
-          ) {
-            wards = this.countyData[i].constituencies[j].wards;
-            break;
-          }
-        }
-      }
-      // When both the county name/code and the constituency names are provided
-    } else if (!!county && !!constituency) {
-      if (typeof county === "number" && county > 0 && county < 48) {
-        for (
-          let i = 0;
-          i < this.countyData[county - 1].constituencies.length;
-          i++
-        ) {
-          if (
-            this.countyData[county - 1].constituencies[
-              i
-            ].constituency_name.toLowerCase() === constituency.toLowerCase()
-          ) {
-            wards = this.countyData[county - 1].constituencies[i].wards;
-            break;
-          }
-        }
-      } else if (typeof county === "string") {
-        const targetCounty: string = county;
-        for (let i = 0; i < this.countyData.length; i++) {
-          if (
-            targetCounty.toLowerCase() ===
-            this.countyData[i].county_name.toLowerCase()
-          ) {
-            for (let j = 0; j < this.countyData[i].constituencies.length; j++) {
-              if (
-                this.countyData[i].constituencies[
-                  j
-                ].constituency_name.toLowerCase() === constituency.toLowerCase()
-              ) {
-                wards = this.countyData[i].constituencies[j].wards;
-                break;
-              }
-            }
-            break;
-          }
-        }
-      }
-    }
-
-    return !!wards
-      ? wards
-      : "Error: Invalid parameter provided. Please check your input and try again.";
+  public getWards(params?: GetWardsParams): Ward[] {
+    return new GetWards(this.countyData, params).call();
   }
 }
 

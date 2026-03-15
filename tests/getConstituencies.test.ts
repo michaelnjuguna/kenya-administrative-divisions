@@ -1,15 +1,18 @@
 import { KenyaAdministrativeDivisions as kad } from "../src/main";
-import { County } from "../src/models";
-
+import { Constituency } from "../src/models";
+function expectValidConstituency(constituency: Constituency, name: string) {
+  expect(constituency).toHaveProperty("constituency_name");
+  expect(constituency).toHaveProperty("wards");
+  expect(Array.isArray(constituency.wards)).toBe(true);
+  expect(constituency.constituency_name).toBe(name);
+}
 describe("KenyaAdministrativeDivisions - getConstituencies", () => {
   test("No parameter passed", () => {
     const result = kad.getConstituencies();
     expect(Array.isArray(result)).toBe(true);
     expect(result.length).toBeGreaterThan(0);
-    expect(result[0]).toHaveProperty("constituency_name");
     expect(result[0]).toHaveProperty("wards");
-    expect(result[0].constituency_name).toBe("Changamwe");
-    expect(Array.isArray(result[0].wards)).toBe(true);
+    expectValidConstituency(result[0], "Changamwe");
   });
   test("Invalid number is passed as param", () => {
     expect(() => {
@@ -25,16 +28,13 @@ describe("KenyaAdministrativeDivisions - getConstituencies", () => {
     expect(Array.isArray(result)).toBe(true);
     expect(result.length).toBe(6);
     expect(result[0]).toHaveProperty("constituency_name", "Changamwe");
-    expect(result[0]).toHaveProperty("wards");
-    expect(Array.isArray(result[0].wards)).toBe(true);
+    expectValidConstituency(result[0], "Changamwe");
   });
   test("Valid string passed as param", () => {
     const result = kad.getConstituencies({ countyName: "Mombasa" });
     expect(Array.isArray(result)).toBe(true);
     expect(result.length).toBe(6);
-    expect(result[0]).toHaveProperty("constituency_name", "Changamwe");
-    expect(result[0]).toHaveProperty("wards");
-    expect(Array.isArray(result[0].wards)).toBe(true);
+    expectValidConstituency(result[0], "Changamwe");
   });
   test("Invalid string is passed as param", () => {
     expect(() => {
