@@ -1,7 +1,10 @@
 "use strict";
 import GetAll from "./actions/getAll";
 import GetCounties from "./actions/getCounties";
+import GetConstituencies from "./actions/getConstituencies";
 import { County, Constituency, Ward } from "./models";
+import { GetCountiesParams, GetConstituenciesParams } from "./params";
+
 class Main {
   // TODO: Break all forEach loops
   // TODO: Use map,filter,reduce
@@ -11,7 +14,6 @@ class Main {
   // TODO: Add github actions
   // TODO: Update documentation
   // TODO: Use ESM
-  // TODO: Test coverage
 
   private countyData: any;
   constructor() {
@@ -22,43 +24,43 @@ class Main {
   public getAll(): County[] | string {
     return new GetAll(this.countyData).call();
   }
-  public getCounties(input?: number | string):any {
-    return new GetCounties(this.countyData,input).call();
-  }
-  public getConstituencies(input?: number | string) {
-    let constituencies: any;
-    if (!!input === false) {
-      constituencies = [];
-      this.countyData.forEach((county: County) => {
-        county.constituencies.forEach((constituency) => {
-          constituencies.push(constituency.constituency_name);
-        });
-      });
-    } else if (typeof input === "number" && input > 0 && input < 48) {
-      constituencies = [];
-      this.countyData[input - 1].constituencies.forEach(
-        (constituency: Constituency) => {
-          constituencies.push(constituency.constituency_name);
-        },
-      );
-    } else if (typeof input === "string") {
-      for (let i = 0; i < this.countyData.length; i++) {
-        for (let j = 0; j < this.countyData[i].constituencies.length; j++) {
-          if (
-            this.countyData[i].constituencies[
-              j
-            ].constituency_name.toLowerCase() === input.toLowerCase()
-          ) {
-            constituencies = this.countyData[i].constituencies[j];
-            break;
-          }
-        }
-      }
-    }
 
-    return !!constituencies
-      ? constituencies
-      : "Error: Invalid parameter provided. Please check your input and try again.";
+  public getCounties(params?: GetCountiesParams): County[] {
+    return new GetCounties(this.countyData, params).call();
+  }
+  public getCountyNames(): String[] {
+    try {
+      if (!this.countyData) {
+        throw new Error("Unable to read county data");
+      }
+      return this.countyData.map((county: County) => county.county_name);
+    } catch (error) {
+      throw new Error(
+        error instanceof Error ? error.message : "An unknown error occurred",
+      );
+    }
+  }
+
+  public getConstituencies(input?: GetConstituenciesParams): Constituency[] {
+    return new GetConstituencies(this.countyData, input).call();
+  }
+  public getConstituencyNames(): String[] {
+    try {
+      if (!this.countyData) {
+        throw new Error("Unable to read county data");
+      }
+      return this.countyData
+        .map((county: County) =>
+          county.constituencies.map(
+            (constituency: Constituency) => constituency.constituency_name,
+          ),
+        )
+        .flat();
+    } catch (error) {
+      throw new Error(
+        error instanceof Error ? error.message : "An unknown error occurred",
+      );
+    }
   }
   public getWards(county?: string | number, constituency?: string) {
     let wards: any;

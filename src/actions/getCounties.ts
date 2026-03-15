@@ -1,31 +1,43 @@
 import { County } from "../models";
-class GetCounties{
-     constructor(private countyData: County[], private input?: any) {
-        this.countyData = countyData;
-        this.input = input;
-      }
-      call(): any{
-        let counties : any = [];
-        try {
-             if (!this.countyData) {
+import { GetCountiesParams } from "../params";
+class GetCounties {
+  constructor(
+    private countyData: County[],
+    private params?: GetCountiesParams,
+  ) {}
+  call(): County[] {
+    try {
+      if (!this.countyData) {
         throw new Error("Unable to read county data");
       }
-      if(!!this.input === false){
-        this.countyData.map((county)=>counties.push(county.county_name))
-      } 
-      
-      if(typeof this.input === 'number' && this.input>0 && this.input<48){
-        counties = this.countyData[this.input-1];
+      if (!this.params) {
+        return this.countyData;
       }
-      if(typeof this.input === 'string'){
-        counties=this.countyData.find((county)=>county.county_name.toLowerCase()===this.input.toLowerCase())
-      }
-      return counties
-        } catch (error) {
-             console.error("Error executing getCounties. ", error);
-      return "Unable to read county data";
+
+      if (this.params.countyCode !== undefined) {
+        if (this.params.countyCode < 1 || this.params.countyCode > 47) {
+          throw new Error(
+            "Invalid county code. County code should be between 1 and 47",
+          );
         }
+
+        return [this.countyData[this.params.countyCode - 1]];
       }
+      if (this.params.countyName) {
+        const county = this.countyData.find(
+          (c) =>
+            c.county_name.toLowerCase() ===
+            this.params!.countyName!.toLowerCase(),
+        );
+        return county ? [county] : [];
+      }
+      return [];
+    } catch (error) {
+      throw new Error(
+        error instanceof Error ? error.message : "An unknown error occurred",
+      );
+    }
+  }
 }
 
 export default GetCounties;
