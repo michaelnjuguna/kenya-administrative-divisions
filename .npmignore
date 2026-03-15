@@ -10,3 +10,5 @@ coverage/
 
 
 .gitignore
+
+*.tgz
