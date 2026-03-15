@@ -27,7 +27,10 @@ class GetConstituencies {
               c.constituency_name.toLowerCase() ===
               this.params!.constituencyName!.toLowerCase(),
           );
-        return match ? [match] : [];
+        if (!match) {
+          throw new Error("Constituency not found with the provided name");
+        }
+        return [match];
       }
       if (this.params.countyName) {
         const county = this.countyData.find(

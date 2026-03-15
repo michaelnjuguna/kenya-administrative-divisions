@@ -43,4 +43,17 @@ describe("KenyaAdministrativeDivisions - getConstituencies", () => {
       });
     }).toThrow("County not found with the provided name");
   });
+  test("Valid constituency name passed as parameter", () => {
+    const result = kad.getConstituencies({ constituencyName: "Changamwe" });
+    expect(Array.isArray(result)).toBe(true);
+    expect(result.length).toBe(1);
+    expectValidConstituency(result[0], "Changamwe");
+  });
+  test("Invalid constituency name passed as parameter", () => {
+    expect(() => {
+      kad.getConstituencies({
+        constituencyName: "Invalid Constituency Name",
+      });
+    }).toThrow("Constituency not found with the provided name");
+  });
 });
