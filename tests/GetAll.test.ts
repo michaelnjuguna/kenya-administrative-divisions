@@ -6,9 +6,8 @@ describe("KenyaAdministrativeDivisions - getAll", () => {
     const result = kad.getAll();
 
     expect(Array.isArray(result)).toBe(true);
-    
-    expect(result.length).toBe(47);
 
+    expect(result.length).toBe(47);
 
     if (Array.isArray(result) && result.length > 0) {
       const county: County = result[0];
@@ -17,12 +16,5 @@ describe("KenyaAdministrativeDivisions - getAll", () => {
       expect(county).toHaveProperty("constituencies");
       expect(Array.isArray(county.constituencies)).toBe(true);
     }
-  });
-
-  test("should return an empty array or valid string if no data", () => {
-   
-    const result = kad.getAll();
-    expect(typeof result === "string" || Array.isArray(result)).toBe(true);
-    
   });
 });

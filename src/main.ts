@@ -26,7 +26,7 @@ class Main {
     this.countyData = require("../county.json");
   }
   // Get all the information
-  public getAll(): County[] | string {
+  public getAll(): County[] {
     return new GetAll(this.countyData).call();
   }
 
