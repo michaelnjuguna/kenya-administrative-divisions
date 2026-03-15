@@ -14,4 +14,10 @@ describe("KenyaAdministrativeDivisions - Main ", () => {
     expect(result.length).toBeGreaterThan(0);
     expect(result).toContain("Mvita");
   });
+  test("getWardNames method returns an array of ward names", () => {
+    const result = kad.getWardNames();
+    expect(Array.isArray(result)).toBe(true);
+    expect(result.length).toBeGreaterThan(0);
+    expect(result).toContain("Shika adabu");
+  });
 });

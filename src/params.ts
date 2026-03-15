@@ -4,3 +4,9 @@ export type GetConstituenciesParams = {
   countyName?: string;
   constituencyName?: string;
 };
+
+export type GetWardsParams = {
+  countyCode?: number;
+  countyName?: string;
+  constituencyName?: string;
+};

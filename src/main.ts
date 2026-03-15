@@ -62,6 +62,25 @@ class Main {
       );
     }
   }
+
+  public getWardNames(): String[] {
+    try {
+      if (!this.countyData) {
+        throw new Error("Unable to read county data");
+      }
+      return this.countyData
+        .map((county: County) =>
+          county.constituencies.map((constituency: Constituency) =>
+            constituency.wards.map((ward: Ward) => ward),
+          ),
+        )
+        .flat(2);
+    } catch (error) {
+      throw new Error(
+        error instanceof Error ? error.message : "An unknown error occurred",
+      );
+    }
+  }
   public getWards(county?: string | number, constituency?: string) {
     let wards: any;
 
