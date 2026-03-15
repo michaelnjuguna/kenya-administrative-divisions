@@ -11,10 +11,6 @@ import {
 } from "./params.js";
 
 class Main {
-  // TODO: Add changelogs
-  // TODO: Add github actions
-  // TODO: Update documentation
-
   private countyData: any;
   constructor() {
     // Read the county data
