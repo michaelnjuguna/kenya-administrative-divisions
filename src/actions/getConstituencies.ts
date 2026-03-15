@@ -1,0 +1,55 @@
+import { County, Constituency } from "../models.js";
+import { GetConstituenciesParams } from "../params.js";
+
+class GetConstituencies {
+  constructor(
+    private countyData: County[],
+    private params?: GetConstituenciesParams,
+  ) {}
+  call(): Constituency[] {
+    try {
+      if (!this.params) {
+        return this.countyData.map((county) => county.constituencies).flat();
+      }
+      if (this.params.countyCode !== undefined) {
+        if (this.params.countyCode < 1 || this.params.countyCode > 47) {
+          throw new Error(
+            "Invalid county code. County code should be between 1 and 47",
+          );
+        }
+        return this.countyData[this.params.countyCode - 1].constituencies;
+      }
+      if (this.params.constituencyName) {
+        const match = this.countyData
+          .flatMap((county) => county.constituencies)
+          .find(
+            (c) =>
+              c.constituency_name.toLowerCase() ===
+              this.params!.constituencyName!.toLowerCase(),
+          );
+        if (!match) {
+          throw new Error("Constituency not found with the provided name");
+        }
+        return [match];
+      }
+      if (this.params.countyName) {
+        const county = this.countyData.find(
+          (c) =>
+            c.county_name.toLowerCase() ===
+            this.params!.countyName!.toLowerCase(),
+        );
+        if (!county) {
+          throw new Error("County not found with the provided name");
+        }
+        return county.constituencies;
+      }
+      return [];
+    } catch (error) {
+      throw new Error(
+        error instanceof Error ? error.message : "An unknown error occurred",
+      );
+    }
+  }
+}
+
+export default GetConstituencies;
