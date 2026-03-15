@@ -10,3 +10,4 @@ backup/
 .npmrc
 .env
 *.tgz
+dist/
