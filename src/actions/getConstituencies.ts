@@ -1,5 +1,5 @@
-import { County, Constituency } from "../models";
-import { GetConstituenciesParams } from "../params";
+import { County, Constituency } from "../models.js";
+import { GetConstituenciesParams } from "../params.js";
 
 class GetConstituencies {
   constructor(

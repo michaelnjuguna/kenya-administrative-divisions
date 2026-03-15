@@ -1,3 +1,12 @@
 src/
+tsconfig.json
+tsconfig.test.json
+jest.config.js
+.github/
+
 node_modules/
 tests/
+coverage/
+
+
+.gitignore

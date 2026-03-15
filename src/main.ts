@@ -1,20 +1,16 @@
-"use strict";
-import GetAll from "./actions/getAll";
-import GetCounties from "./actions/getCounties";
-import GetConstituencies from "./actions/getConstituencies";
-import GetWards from "./actions/getWards";
-import { County, Constituency, Ward } from "./models";
+import GetAll from "./actions/getAll.js";
+import GetCounties from "./actions/getCounties.js";
+import GetConstituencies from "./actions/getConstituencies.js";
+import GetWards from "./actions/getWards.js";
+import { County, Constituency, Ward } from "./models.js";
+import countyData from "../county.json" with { type: "json" };
 import {
   GetCountiesParams,
   GetConstituenciesParams,
   GetWardsParams,
-} from "./params";
+} from "./params.js";
 
 class Main {
-  // TODO: Break all forEach loops
-  // TODO: Use map,filter,reduce
-  // TODO: Add tests
-  // TODO: Move to actions pattern
   // TODO: Add changelogs
   // TODO: Add github actions
   // TODO: Update documentation
@@ -23,7 +19,7 @@ class Main {
   private countyData: any;
   constructor() {
     // Read the county data
-    this.countyData = require("../county.json");
+    this.countyData = countyData;
   }
   // Get all the information
   public getAll(): County[] {
@@ -33,7 +29,7 @@ class Main {
   public getCounties(params?: GetCountiesParams): County[] {
     return new GetCounties(this.countyData, params).call();
   }
-  public getCountyNames(): String[] {
+  public getCountyNames(): string[] {
     try {
       if (!this.countyData) {
         throw new Error("Unable to read county data");
@@ -49,7 +45,7 @@ class Main {
   public getConstituencies(input?: GetConstituenciesParams): Constituency[] {
     return new GetConstituencies(this.countyData, input).call();
   }
-  public getConstituencyNames(): String[] {
+  public getConstituencyNames(): string[] {
     try {
       if (!this.countyData) {
         throw new Error("Unable to read county data");
@@ -68,7 +64,7 @@ class Main {
     }
   }
 
-  public getWardNames(): String[] {
+  public getWardNames(): string[] {
     try {
       if (!this.countyData) {
         throw new Error("Unable to read county data");

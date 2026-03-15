@@ -1,5 +1,5 @@
-import { Ward } from "../models";
-import { GetWardsParams } from "../params";
+import { Ward } from "../models.js";
+import { GetWardsParams } from "../params.js";
 
 class GetWards {
   constructor(

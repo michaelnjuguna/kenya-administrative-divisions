@@ -1,5 +1,5 @@
-import { County } from "../models";
-import { GetCountiesParams } from "../params";
+import { County } from "../models.js";
+import { GetCountiesParams } from "../params.js";
 class GetCounties {
   constructor(
     private countyData: County[],

@@ -1,4 +1,4 @@
-import { County } from "../models";
+import { County } from "../models.js";
 
 class GetAll {
   constructor(private countyData: County[]) {}
