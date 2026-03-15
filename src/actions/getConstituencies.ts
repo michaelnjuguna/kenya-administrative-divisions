@@ -11,7 +11,7 @@ class GetConstituencies {
       if (!this.params) {
         return this.countyData.map((county) => county.constituencies).flat();
       }
-      if (this.params.countyCode) {
+      if (this.params.countyCode !== undefined) {
         if (this.params.countyCode < 1 || this.params.countyCode > 47) {
           throw new Error(
             "Invalid county code. County code should be between 1 and 47",
@@ -30,13 +30,15 @@ class GetConstituencies {
         return match ? [match] : [];
       }
       if (this.params.countyName) {
-        return (
-          this.countyData.find(
-            (c) =>
-              c.county_name.toLowerCase() ===
-              this.params!.countyName!.toLowerCase(),
-          )?.constituencies || []
+        const county = this.countyData.find(
+          (c) =>
+            c.county_name.toLowerCase() ===
+            this.params!.countyName!.toLowerCase(),
         );
+        if (!county) {
+          throw new Error("County not found with the provided name");
+        }
+        return county.constituencies;
       }
       return [];
     } catch (error) {
