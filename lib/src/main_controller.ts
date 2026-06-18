@@ -29,6 +29,7 @@ class MainController {
       if (!this.countyData) {
         throw new Error("Unable to read county data");
       }
+
       return this.countyData.map((county: County) => county.county_name);
     } catch (error) {
       throw new Error(
@@ -40,10 +41,24 @@ class MainController {
   public getConstituencies(input?: GetConstituenciesParams): Constituency[] {
     return new GetConstituencies(this.countyData, input).execute();
   }
-  public getConstituencyNames(): string[] {
+  public getConstituencyNames({
+    countyCode,
+    countyName,
+  }: {
+    countyCode?: number;
+    countyName?: string;
+  } = {}): string[] {
     try {
       if (!this.countyData) {
         throw new Error("Unable to read county data");
+      }
+      if (countyCode !== undefined && countyCode !== null) {
+        if (countyCode < 1 || countyCode > 47) {
+          throw new Error("Invalid county code");
+        }
+        return this.countyData[countyCode - 1].map(
+          (c: Constituency) => c.constituency_name,
+        );
       }
       return this.countyData
         .map((county: County) =>
