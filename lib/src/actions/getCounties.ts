@@ -1,11 +1,11 @@
 import { County } from "../models.js";
-import { GetCountiesParams } from "../params.js";
+import { GetCountiesParams } from "../core/params.js";
 class GetCounties {
   constructor(
     private countyData: County[],
     private params?: GetCountiesParams,
   ) {}
-  call(): County[] {
+  execute(): County[] {
     try {
       if (!this.countyData) {
         throw new Error("Unable to read county data");

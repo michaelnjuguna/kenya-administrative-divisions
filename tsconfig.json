@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "outDir": "./dist",
-    "rootDir": "./src",
+    "rootDir": "./lib",
 
     "target": "ES2020",
     "lib": ["es2020"],
@@ -24,5 +24,5 @@
 
     "resolveJsonModule": true
   },
-  "include": ["src/**/*.ts"]
+  "include": ["lib/src/**/*.ts", "lib/kenya_administrative_divisions.ts"]
 }

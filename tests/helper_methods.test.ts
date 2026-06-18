@@ -1,6 +1,6 @@
-import { KenyaAdministrativeDivisions as kad } from "../src/main";
+import { kenyaAdministrativeDivisions as kad } from "../lib/kenya_administrative_divisions";
 
-describe("KenyaAdministrativeDivisions - Main ", () => {
+describe("Helper methods - MainController", () => {
   test("getCountyNames method returns an array of county names", () => {
     const result = kad.getCountyNames();
     expect(Array.isArray(result)).toBe(true);

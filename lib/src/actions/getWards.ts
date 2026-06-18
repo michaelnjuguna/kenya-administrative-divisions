@@ -1,12 +1,12 @@
 import { Ward } from "../models.js";
-import { GetWardsParams } from "../params.js";
+import { GetWardsParams } from "../core/params.js";
 
 class GetWards {
   constructor(
     private countyData: any,
     private params?: GetWardsParams,
   ) {}
-  call(): Ward[] {
+  execute(): Ward[] {
     try {
       if (!this.countyData) {
         throw new Error("Unable to read county data");

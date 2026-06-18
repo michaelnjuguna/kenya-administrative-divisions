@@ -1,5 +1,7 @@
-import { KenyaAdministrativeDivisions as kad } from "../src/main";
-import { County } from "../src/models";
+import {
+  kenyaAdministrativeDivisions as kad,
+  County,
+} from "../lib/kenya_administrative_divisions";
 function expectValidCounty(county: County, code: number, name: string) {
   expect(county).toHaveProperty("county_code", code);
   expect(county).toHaveProperty("county_name", name);

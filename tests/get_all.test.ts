@@ -1,5 +1,7 @@
-import { KenyaAdministrativeDivisions as kad } from "../src/main";
-import { County } from "../src/models";
+import {
+  kenyaAdministrativeDivisions as kad,
+  County,
+} from "../lib/kenya_administrative_divisions";
 
 describe("KenyaAdministrativeDivisions - getAll", () => {
   test("should return an array of counties", () => {

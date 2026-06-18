@@ -1,5 +1,8 @@
-import { KenyaAdministrativeDivisions as kad } from "../src/main";
-import { Constituency } from "../src/models";
+import {
+  kenyaAdministrativeDivisions as kad,
+  Constituency,
+} from "../lib/kenya_administrative_divisions";
+
 function expectValidConstituency(constituency: Constituency, name: string) {
   expect(constituency).toHaveProperty("constituency_name");
   expect(constituency).toHaveProperty("wards");

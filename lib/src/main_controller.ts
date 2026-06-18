@@ -3,14 +3,14 @@ import GetCounties from "./actions/getCounties.js";
 import GetConstituencies from "./actions/getConstituencies.js";
 import GetWards from "./actions/getWards.js";
 import { County, Constituency, Ward } from "./models.js";
-import countyData from "../county.json" with { type: "json" };
+import countyData from "./core/county.json" with { type: "json" };
 import {
   GetCountiesParams,
   GetConstituenciesParams,
   GetWardsParams,
-} from "./params.js";
+} from "./core/params.js";
 
-class Main {
+class MainController {
   private countyData: any;
   constructor() {
     // Read the county data
@@ -18,11 +18,11 @@ class Main {
   }
   // Get all the information
   public getAll(): County[] {
-    return new GetAll(this.countyData).call();
+    return new GetAll(this.countyData).execute();
   }
 
   public getCounties(params?: GetCountiesParams): County[] {
-    return new GetCounties(this.countyData, params).call();
+    return new GetCounties(this.countyData, params).execute();
   }
   public getCountyNames(): string[] {
     try {
@@ -38,7 +38,7 @@ class Main {
   }
 
   public getConstituencies(input?: GetConstituenciesParams): Constituency[] {
-    return new GetConstituencies(this.countyData, input).call();
+    return new GetConstituencies(this.countyData, input).execute();
   }
   public getConstituencyNames(): string[] {
     try {
@@ -78,8 +78,7 @@ class Main {
     }
   }
   public getWards(params?: GetWardsParams): Ward[] {
-    return new GetWards(this.countyData, params).call();
+    return new GetWards(this.countyData, params).execute();
   }
 }
-
-export const KenyaAdministrativeDivisions = new Main();
+export const mainController = new MainController();

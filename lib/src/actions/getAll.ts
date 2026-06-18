@@ -3,7 +3,7 @@ import { County } from "../models.js";
 class GetAll {
   constructor(private countyData: County[]) {}
 
-  call(): County[] {
+  execute(): County[] {
     try {
       if (!this.countyData) {
         throw new Error("Unable to read county data");
