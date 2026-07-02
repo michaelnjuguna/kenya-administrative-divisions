@@ -60,6 +60,8 @@ class MainController {
           (c: Constituency) => c.constituency_name,
         );
       }
+      if (!!countyName) {
+      }
       return this.countyData
         .map((county: County) =>
           county.constituencies.map(

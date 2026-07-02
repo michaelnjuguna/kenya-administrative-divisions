@@ -35,7 +35,7 @@
   "homepage": "https://github.com/michaelnjuguna/kenya-administrative-divisions#readme",
   "devDependencies": {
     "@types/jest": "^30.0.0",
-    "@types/node": "^20.8.3",
+    "@types/node": "^20.19.43",
     "jest": "^30.2.0",
     "ts-jest": "^29.4.6",
     "typescript": "^5.2.2"

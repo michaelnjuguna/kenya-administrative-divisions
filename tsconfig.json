@@ -20,7 +20,7 @@
 
     "emitDeclarationOnly": false,
 
-    "types": ["node"],
+    "types": ["node", "jest"],
 
     "resolveJsonModule": true
   },

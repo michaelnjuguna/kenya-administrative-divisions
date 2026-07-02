@@ -2,7 +2,7 @@ import {
   kenyaAdministrativeDivisions as kad,
   Constituency,
 } from "../lib/kenya_administrative_divisions";
-
+import { describe, test, expect } from "@jest/globals";
 function expectValidConstituency(constituency: Constituency, name: string) {
   expect(constituency).toHaveProperty("constituency_name");
   expect(constituency).toHaveProperty("wards");
