@@ -28,4 +28,10 @@ describe("getConstituencyNames", () => {
     expect(result.length).toBeGreaterThan(0);
     expect(result).toContain("Mvita");
   });
+  test("passing valid countycode to getConstituencyNames", () => {
+    const result = kad.getConstituencyNames({ countyCode: 1 });
+    expect(Array.isArray(result)).toBe(true);
+    expect(result.length).toBeGreaterThan(0);
+    expect(result).toContain("Mvita");
+  });
 });

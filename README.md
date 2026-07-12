@@ -39,12 +39,17 @@ yarn add kenya-administrative-divisions
 ### Basic initialization
 
 ```javascript
-import { KenyaAdministrativeDivisions as kad } from "kenya-administrative-divisions";
+import {
+  KenyaAdministrativeDivisions as kad,
+  County,
+  Constituency,
+  Ward,
+} from "kenya-administrative-divisions";
 ```
 
 ## Methods available
 
-### Retrieving names
+### Helper methods
 
 ```javascript
 // Get all 47 County names
@@ -52,6 +57,7 @@ const counties = kad.getCountyNames();
 
 // Get all Constituency names
 const constituencies = kad.getConstituencyNames();
+const mombasaConstituencies = kad.getConstituencyNames({ countyCode: 1 });
 
 // Get all Ward names
 const wards = kad.getWardNames();

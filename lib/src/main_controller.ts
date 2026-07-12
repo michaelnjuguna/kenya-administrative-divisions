@@ -56,10 +56,12 @@ class MainController {
         if (countyCode < 1 || countyCode > 47) {
           throw new Error("Invalid county code");
         }
-        return this.countyData[countyCode - 1].map(
-          (c: Constituency) => c.constituency_name,
-        );
+        return this.countyData[countyCode - 1].constituencies
+          .map((c: Constituency) => c.constituency_name)
+          .flat();
       }
+
+      // TODO: Passing county name
       if (!!countyName) {
       }
       return this.countyData
