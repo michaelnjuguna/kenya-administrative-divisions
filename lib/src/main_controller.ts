@@ -60,9 +60,17 @@ class MainController {
           .map((c: Constituency) => c.constituency_name)
           .flat();
       }
-
-      // TODO: Passing county name
-      if (!!countyName) {
+      if (countyName) {
+        const match = this.countyData.find(
+          (c: County) =>
+            c.county_name.toLowerCase() === countyName.toLowerCase(),
+        );
+        if (!match) {
+          throw new Error("Invalid county name");
+        }
+        return match.constituencies.map(
+          (c: Constituency) => c.constituency_name,
+        );
       }
       return this.countyData
         .map((county: County) =>

@@ -17,7 +17,7 @@ describe("Helper methods - MainController", () => {
 });
 
 describe("getConstituencyNames", () => {
-  test("passing invalid countyCode getConstituencyNames ", () => {
+  test("passing invalid countyCode to getConstituencyNames ", () => {
     expect(() => {
       kad.getConstituencyNames({ countyCode: 0 });
     }).toThrow("Invalid county code");
@@ -30,6 +30,17 @@ describe("getConstituencyNames", () => {
   });
   test("passing valid countycode to getConstituencyNames", () => {
     const result = kad.getConstituencyNames({ countyCode: 1 });
+    expect(Array.isArray(result)).toBe(true);
+    expect(result.length).toBeGreaterThan(0);
+    expect(result).toContain("Mvita");
+  });
+  test("Passing invalid countyName to getConstituencyNames", () => {
+    expect(() => {
+      kad.getConstituencyNames({ countyName: "Invalid name" });
+    }).toThrow("Invalid county name");
+  });
+  test("Passing valid countyName to getConstituencyNames", () => {
+    const result = kad.getConstituencyNames({ countyName: "Mombasa" });
     expect(Array.isArray(result)).toBe(true);
     expect(result.length).toBeGreaterThan(0);
     expect(result).toContain("Mvita");
