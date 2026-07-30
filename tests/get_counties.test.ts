@@ -11,14 +11,12 @@ function expectValidCounty(county: County, code: number, name: string) {
 }
 describe("KenyaAdministrativeDivisions - getCounties", () => {
   test("No parameter passed", () => {
-    const result = kad.getCounties();
-    expect(Array.isArray(result)).toBe(true);
+    const result: County[] = kad.getCounties();
     expect(result.length).toBe(47);
   });
   test("Valid number passed as parameter", () => {
-    const result = kad.getCounties({ countyCode: 1 });
-    const countyResult = result[0] as County;
-    expect(Array.isArray(result)).toBe(true);
+    const result: County[] = kad.getCounties({ countyCode: 1 });
+    const countyResult = result[0];
     expect(result.length).toBe(1);
     expect(countyResult.county_code).toBe(1);
     if (!!result) {
@@ -34,9 +32,8 @@ describe("KenyaAdministrativeDivisions - getCounties", () => {
     }).toThrow("Invalid county code. County code should be between 1 and 47");
   });
   test("Valid string passed as param", () => {
-    const result = kad.getCounties({ countyName: "Mombasa" });
-    const countyResult = result[0] as County;
-    expect(Array.isArray(result)).toBe(true);
+    const result: County[] = kad.getCounties({ countyName: "Mombasa" });
+    const countyResult = result[0];
     expect(countyResult.county_code).toBe(1);
     expect(result.length).toBe(1);
     if (!!result) {

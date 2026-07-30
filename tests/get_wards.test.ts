@@ -6,13 +6,11 @@ import { describe, test, expect } from "@jest/globals";
 
 describe("KenyaAdministrativeDivisions - getWards", () => {
   test("No parameters passed", () => {
-    const result = kad.getWards();
-    expect(Array.isArray(result)).toBe(true);
+    const result: Ward[] = kad.getWards();
     expect(result.length).toBeGreaterThan(0);
   });
   test("Valid county code passed", () => {
-    const result = kad.getWards({ countyCode: 1 });
-    expect(Array.isArray(result)).toBe(true);
+    const result: Ward[] = kad.getWards({ countyCode: 1 });
     expect(result.length).toBeGreaterThan(0);
     expect(result).toContain("Shika adabu");
   });
@@ -25,10 +23,9 @@ describe("KenyaAdministrativeDivisions - getWards", () => {
     }).toThrow("Invalid county code. County code should be between 1 and 47");
   });
   test("Valid county name passed", () => {
-    const result = kad.getWards({
+    const result: Ward[] = kad.getWards({
       countyName: "Mombasa",
     });
-    expect(Array.isArray(result)).toBe(true);
     expect(result.length).toBeGreaterThan(0);
     expect(result).toContain("Shika adabu");
   });
@@ -40,10 +37,9 @@ describe("KenyaAdministrativeDivisions - getWards", () => {
     }).toThrow("County not found with the provided name");
   });
   test("Valid constituency name passed", () => {
-    const result = kad.getWards({
+    const result: Ward[] = kad.getWards({
       constituencyName: "Likoni",
     });
-    expect(Array.isArray(result)).toBe(true);
     expect(result.length).toBeGreaterThan(0);
     expect(result).toContain("Shika adabu");
   });

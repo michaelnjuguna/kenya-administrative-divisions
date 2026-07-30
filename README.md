@@ -18,7 +18,6 @@ See [CHANGELOG.md](./CHANGELOG.md) for all changes.
     - [Get constituencies](#get-constituencies)
     - [Get wards](#get-wards)
     - [API reference](#api-reference)
-- [Contributing](#contributing)
 - [Support](#support)
 
 ## Installation
@@ -53,34 +52,37 @@ import {
 
 ```javascript
 // Get all 47 County names
-const counties = kad.getCountyNames();
+const counties:string[] = kad.getCountyNames();
 
 // Get all Constituency names
-const constituencies = kad.getConstituencyNames();
-const mombasaConstituencies = kad.getConstituencyNames({ countyCode: 1 });
+const constituencies:string[] = kad.getConstituencyNames();
+const mombasaConstituencies: string[] = kad.getConstituencyNames({ countyCode: 1 });
+const mombasaConstituencies: string[] = kad.getConstituencyNames({
+  countyName: "Mombasa",
+});
 
 // Get all Ward names
-const wards = kad.getWardNames();
+const wards: string[]= kad.getWardNames();
 ```
 
 ### Get all
 
 ```javascript
 // Get all the data
-const data = kad.getAll();
+const data: County[] = kad.getAll();
 ```
 
 ### Get Counties
 
 ```javascript
-// Get all the counties names
-const counties = kad.getCounties();
+// Get all the counties
+const counties: County[] = kad.getCounties();
 
 // Get a specific county by code (1-47)
-const mombasa = kad.getCounties({ countyCode: 1 });
+const mombasa: County[] = kad.getCounties({ countyCode: 1 });
 
 // Get a specific county by name
-const nairobi = kad.getCounties({ countyName: "Nairobi" });
+const nairobi: County[] = kad.getCounties({ countyName: "Nairobi" });
 ```
 
 ### Get Constituencies
@@ -90,22 +92,22 @@ const nairobi = kad.getCounties({ countyName: "Nairobi" });
 const allConstituencies = kad.getConstituencies();
 
 // Get a specific constituency information
-const changamwe = kad.getConstituencies({ constituencyName: "Changamwe" });
+const changamwe: Constituency[] = kad.getConstituencies({ constituencyName: "Changamwe" });
 
 // Get constituencies belonging to a specific county
-const msaConstituencies = kad.getConstituencies({ countyCode: 1 });
-const nbiConstituencies = kad.getConstituencies({ countyName: "Nairobi" });
+const msaConstituencies: Constituency[] = kad.getConstituencies({ countyCode: 1 });
+const nbiConstituencies: Constituency[] = kad.getConstituencies({ countyName: "Nairobi" });
 ```
 
 ### Get wards
 
 ```javascript
 // Returns all ward names
-const wards = kad.getWards();
+const wards: Ward[] = kad.getWards();
 
 // Returns wards names of a particular county by passing its county code
-const wardsInMombasa = kad.getWards({ countyCode: 1 });
-const wardsInMombasa = kad.getWards({ countyName: "Mombasa" });
+const wardsInMombasa:Ward[] = kad.getWards({ countyCode: 1 });
+const wardsInMombasa: Ward[] = kad.getWards({ countyName: "Mombasa" });
 
 // Get wards by Constituency
 const wardsInLikoni = kad.getWards({ constituencyName: "Likoni" });
@@ -165,17 +167,6 @@ Methods for retrieving flat arrays of strings, ideal for search suggestions or s
 - **`.getCountyNames()`**: Returns `string[]`
 - **`.getConstituencyNames()`**: Returns `string[]`
 - **`.getWardNames()`**: Returns `string[]`
-
-## Contributing
-
-1. Fork this repository.
-2. Pull the latest changes from develop.
-3. Create new branch with feature name.
-4. Implement your feature.
-5. Run tests
-6. Commit and set commit message with feature name.
-7. Push your code to your fork repository.
-8. Create pull request and point to develop branch.
 
 ## Support
 
