@@ -39,7 +39,7 @@ yarn add kenya-administrative-divisions
 
 ```javascript
 import {
-  KenyaAdministrativeDivisions as kad,
+  kenyaAdministrativeDivisions as kad,
   County,
   Constituency,
   Ward,
