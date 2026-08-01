@@ -3,14 +3,14 @@ import GetCounties from "./actions/getCounties.js";
 import GetConstituencies from "./actions/getConstituencies.js";
 import GetWards from "./actions/getWards.js";
 import { County, Constituency, Ward } from "./models.js";
-import countyData from "../county.json" with { type: "json" };
+import countyData from "./core/county.json" with { type: "json" };
 import {
   GetCountiesParams,
   GetConstituenciesParams,
   GetWardsParams,
-} from "./params.js";
+} from "./core/params.js";
 
-class Main {
+class MainController {
   private countyData: any;
   constructor() {
     // Read the county data
@@ -18,17 +18,18 @@ class Main {
   }
   // Get all the information
   public getAll(): County[] {
-    return new GetAll(this.countyData).call();
+    return new GetAll(this.countyData).execute();
   }
 
   public getCounties(params?: GetCountiesParams): County[] {
-    return new GetCounties(this.countyData, params).call();
+    return new GetCounties(this.countyData, params).execute();
   }
   public getCountyNames(): string[] {
     try {
       if (!this.countyData) {
         throw new Error("Unable to read county data");
       }
+
       return this.countyData.map((county: County) => county.county_name);
     } catch (error) {
       throw new Error(
@@ -38,12 +39,38 @@ class Main {
   }
 
   public getConstituencies(input?: GetConstituenciesParams): Constituency[] {
-    return new GetConstituencies(this.countyData, input).call();
+    return new GetConstituencies(this.countyData, input).execute();
   }
-  public getConstituencyNames(): string[] {
+  public getConstituencyNames({
+    countyCode,
+    countyName,
+  }: {
+    countyCode?: number;
+    countyName?: string;
+  } = {}): string[] {
     try {
       if (!this.countyData) {
         throw new Error("Unable to read county data");
+      }
+      if (countyCode !== undefined && countyCode !== null) {
+        if (countyCode < 1 || countyCode > 47) {
+          throw new Error("Invalid county code");
+        }
+        return this.countyData[countyCode - 1].constituencies
+          .map((c: Constituency) => c.constituency_name)
+          .flat();
+      }
+      if (countyName) {
+        const match = this.countyData.find(
+          (c: County) =>
+            c.county_name.toLowerCase() === countyName.toLowerCase(),
+        );
+        if (!match) {
+          throw new Error("Invalid county name");
+        }
+        return match.constituencies.map(
+          (c: Constituency) => c.constituency_name,
+        );
       }
       return this.countyData
         .map((county: County) =>
@@ -78,8 +105,7 @@ class Main {
     }
   }
   public getWards(params?: GetWardsParams): Ward[] {
-    return new GetWards(this.countyData, params).call();
+    return new GetWards(this.countyData, params).execute();
   }
 }
-
-export const KenyaAdministrativeDivisions = new Main();
+export const mainController = new MainController();

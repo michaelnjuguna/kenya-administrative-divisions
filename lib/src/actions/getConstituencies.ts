@@ -1,12 +1,12 @@
 import { County, Constituency } from "../models.js";
-import { GetConstituenciesParams } from "../params.js";
+import { GetConstituenciesParams } from "../core/params.js";
 
 class GetConstituencies {
   constructor(
     private countyData: County[],
     private params?: GetConstituenciesParams,
   ) {}
-  call(): Constituency[] {
+  execute(): Constituency[] {
     try {
       if (!this.params) {
         return this.countyData.map((county) => county.constituencies).flat();

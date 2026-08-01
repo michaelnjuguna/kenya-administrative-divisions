@@ -1,11 +1,12 @@
-import { KenyaAdministrativeDivisions as kad } from "../src/main";
-import { County } from "../src/models";
+import {
+  kenyaAdministrativeDivisions as kad,
+  County,
+} from "../lib/kenya_administrative_divisions";
+import { describe, test, expect } from "@jest/globals";
 
 describe("KenyaAdministrativeDivisions - getAll", () => {
   test("should return an array of counties", () => {
-    const result = kad.getAll();
-
-    expect(Array.isArray(result)).toBe(true);
+    const result: County[] = kad.getAll();
 
     expect(result.length).toBe(47);
 

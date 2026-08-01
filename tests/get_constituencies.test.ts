@@ -1,5 +1,8 @@
-import { KenyaAdministrativeDivisions as kad } from "../src/main";
-import { Constituency } from "../src/models";
+import {
+  kenyaAdministrativeDivisions as kad,
+  Constituency,
+} from "../lib/kenya_administrative_divisions";
+import { describe, test, expect } from "@jest/globals";
 function expectValidConstituency(constituency: Constituency, name: string) {
   expect(constituency).toHaveProperty("constituency_name");
   expect(constituency).toHaveProperty("wards");
@@ -8,8 +11,7 @@ function expectValidConstituency(constituency: Constituency, name: string) {
 }
 describe("KenyaAdministrativeDivisions - getConstituencies", () => {
   test("No parameter passed", () => {
-    const result = kad.getConstituencies();
-    expect(Array.isArray(result)).toBe(true);
+    const result: Constituency[] = kad.getConstituencies();
     expect(result.length).toBeGreaterThan(0);
     expect(result[0]).toHaveProperty("wards");
     expectValidConstituency(result[0], "Changamwe");
@@ -23,9 +25,8 @@ describe("KenyaAdministrativeDivisions - getConstituencies", () => {
     }).toThrow("Invalid county code. County code should be between 1 and 47");
   });
   test("Valid number passed as parameter", () => {
-    const result = kad.getConstituencies({ countyCode: 1 });
+    const result: Constituency[] = kad.getConstituencies({ countyCode: 1 });
 
-    expect(Array.isArray(result)).toBe(true);
     expect(result.length).toBe(6);
     expect(result[0]).toHaveProperty("constituency_name", "Changamwe");
     expectValidConstituency(result[0], "Changamwe");
@@ -44,8 +45,9 @@ describe("KenyaAdministrativeDivisions - getConstituencies", () => {
     }).toThrow("County not found with the provided name");
   });
   test("Valid constituency name passed as parameter", () => {
-    const result = kad.getConstituencies({ constituencyName: "Changamwe" });
-    expect(Array.isArray(result)).toBe(true);
+    const result: Constituency[] = kad.getConstituencies({
+      constituencyName: "Changamwe",
+    });
     expect(result.length).toBe(1);
     expectValidConstituency(result[0], "Changamwe");
   });
