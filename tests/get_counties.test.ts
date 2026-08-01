@@ -33,7 +33,7 @@ describe("KenyaAdministrativeDivisions - getCounties", () => {
   });
   test("Valid string passed as param", () => {
     const result: County[] = kad.getCounties({ countyName: "Mombasa" });
-    const countyResult = result[0];
+    const countyResult: County = result[0];
     expect(countyResult.county_code).toBe(1);
     expect(result.length).toBe(1);
     if (!!result) {

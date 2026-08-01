@@ -12,7 +12,7 @@ See [CHANGELOG.md](./CHANGELOG.md) for all changes.
 - [Usage](#usage)
   - [Basic initialization](#basic-initialization)
   - [Methods available](#methods-available)
-    - [Retrieving names](#retrieving-names)
+    - [Helper methods](#helper-methods)
     - [Get all](#get-all)
     - [Get counties](#get-counties)
     - [Get constituencies](#get-constituencies)
